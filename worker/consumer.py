@@ -1,9 +1,15 @@
 from kafka import KafkaConsumer
+import json
 
 
 class Consumer:
     def __init__(self, kafkaServer, topicReceive):
-        self.consumer = KafkaConsumer(topicReceive, bootstrap_servers=[kafkaServer])
+        self.consumer = KafkaConsumer(
+            topicReceive,
+            bootstrap_servers=[kafkaServer],
+            group_id='my-group',
+            value_deserializer=lambda m: json.loads(m.decode('ascii'))
+        )
 
     def startReceive(self, methodMessages):
         for message in self.consumer:
@@ -13,4 +19,4 @@ class Consumer:
                                                  message.offset, message.key,
                                                  message.value))
 
-            methodMessages(message)
+        # methodMessages(message)
