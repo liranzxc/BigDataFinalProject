@@ -21,5 +21,3 @@ class Consumer:
             #                                      message.offset, message.key,
             #                                      message.value))
 
-    def hello(self):
-        print("hello")
