@@ -15,10 +15,9 @@ class Producer:
         return ack
 
     def on_send_success(self, record_metadata):
-        pass
-        # print(record_metadata.topic)
-        # print(record_metadata.partition)
-        # print(record_metadata.offset)
+        print(record_metadata.topic)
+        print(record_metadata.partition)
+        print(record_metadata.offset)
 
     def on_send_error(self, excp):
         print('I am an errback', exc_info=excp)
