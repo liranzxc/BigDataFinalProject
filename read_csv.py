@@ -1,24 +1,29 @@
 import pandas as pd
 import json
 from models.song import Song
+from baseClasses.producer import Producer
 
-lyrics_df = None
+json_songs = None
 headers = None
 artist_header_label = "artist"
 song_name_header_label = "song_name"
 lyrics_label = "text"
-lyrics_json = None
+# jsons_songs = []
+BOOTSTRAP_SERVER = "172.25.012:9092"
+TOPIC_NAME = "read_csv_input_data"
+producer = Producer(BOOTSTRAP_SERVER, TOPIC_NAME)
+
 
 def read_csv(filepath = "datasets/songdata.csv"):
-    global lyrics_df, headers, lyrics_json
-    lyrics_df = pd.read_csv(filepath)
-    lyrics_df.to_json(r'lyrics.json')
-    headers = list(lyrics_df.columns)
+    global json_songs, headers, lyrics_json
+    json_songs = pd.read_csv(filepath)
+    json_songs.to_json(r'lyrics.json')
+    headers = list(json_songs.columns)
     # print(headers)
 
-    lyrics_json = lyrics_df.to_json(orient='split')
     # print(lyrics_json)
-    return headers, lyrics_df, lyrics_json
+    return headers, json_songs
+
 
 def create_songs_list(lyrics_dataframe):
     songs_lst = []
@@ -30,7 +35,15 @@ def create_songs_list(lyrics_dataframe):
 
     return songs_lst
 
+
+# def songs_list_to_jsons_list(songs_list):
+#     jsons_songs = []
+#     for song in songs_lst:
+#         json.dump(song)
+
+
 if __name__ == "__main__":
     read_csv()
-    create_songs_list(lyrics_df)
+    songs_lst = create_songs_list(json_songs)
+    print(json_songs)
 

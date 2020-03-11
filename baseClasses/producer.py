@@ -2,7 +2,6 @@ from bson import json_util
 from kafka import KafkaProducer
 import json
 
-
 class Producer:
     def __init__(self, kafkaServer, topicSend):
         self.topicSend = topicSend

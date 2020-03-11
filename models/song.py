@@ -4,3 +4,4 @@ class Song:
         self.artist = artist
         self.song_name = song_name
         self.text = text
+
