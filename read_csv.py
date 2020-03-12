@@ -3,12 +3,10 @@ import json
 from baseClasses.consumer import Consumer
 from baseClasses.producer import Producer
 
-df_songs = None
-headers = None
-artist_header_label = "artist"
-song_name_header_label = "song_name"
-lyrics_label = "text"
-BOOTSTRAP_SERVER = "172.25.012:9092"
+# artist_header_label = "artist"
+# song_name_header_label = "song_name"
+# lyrics_label = "text"
+BOOTSTRAP_SERVER = "172.25.0.12:9092"
 TOPIC_NAME = "song"
 
 
