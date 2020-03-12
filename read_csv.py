@@ -30,15 +30,16 @@ def read_csv(filepath = "datasets/songdata.csv"):
 
 
 def get_list_of_jsons():
-    global lst_json_songs
+    lst_json_songs = []
     for line in open('lyrics.json', 'r'):
         lst_json_songs.append(json.loads(line))
 
+    return lst_json_songs
 
 if __name__ == "__main__":
     read_csv()
-    get_list_of_jsons()
-    consumer = Consumer(BOOTSTRAP_SERVER, TOPIC_NAME) #for test
+    songsArray = get_list_of_jsons()
+    # consumer = Consumer(BOOTSTRAP_SERVER, TOPIC_NAME) #for test
    # print(lst_json_songs[0])
     future = (producer.send(lst_json_songs[0]))
     result = future.get(timeout=1)
