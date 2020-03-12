@@ -39,12 +39,15 @@ if __name__ == "__main__":
     read_csv()
     get_list_of_jsons()
     consumer = Consumer(BOOTSTRAP_SERVER, TOPIC_NAME) #for test
-    print(lst_json_songs[0])
-    producer.send(lst_json_songs[0])
+   # print(lst_json_songs[0])
+    future = (producer.send(lst_json_songs[0]))
+    result = future.get(timeout=1)
+    print(result)
+    print("finish")
 
     # producer.producer.flush()
-    producer.producer.close()
+    # producer.producer.close()
 
-    for message in consumer:
-        print(consumer)
+    # for message in consumer:
+    #     print(consumer)
 
