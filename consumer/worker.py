@@ -18,7 +18,7 @@ def SongWork(song: Song):
 
 
 # counts amount of words in the string
-def count_words(lyrics):
+def count_words(lyrics: str):
     delimiters = r'[.,\s]\t*\s*\n*'
     rdd = sc.parallelize([lyrics]).flatMap(lambda line: re.split(delimiters, line))
     return rdd.count()
