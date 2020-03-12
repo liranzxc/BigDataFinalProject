@@ -1,49 +1,50 @@
 import pandas as pd
 import json
-from models.song import Song
+from baseClasses.consumer import Consumer
 from baseClasses.producer import Producer
 
-json_songs = None
+df_songs = None
+lst_json_songs = []
 headers = None
 artist_header_label = "artist"
 song_name_header_label = "song_name"
 lyrics_label = "text"
-# jsons_songs = []
 BOOTSTRAP_SERVER = "172.25.012:9092"
-TOPIC_NAME = "read_csv_input_data"
+TOPIC_NAME = "song"
 producer = Producer(BOOTSTRAP_SERVER, TOPIC_NAME)
 
 
 def read_csv(filepath = "datasets/songdata.csv"):
-    global json_songs, headers, lyrics_json
-    json_songs = pd.read_csv(filepath)
-    json_songs.to_json(r'lyrics.json')
-    headers = list(json_songs.columns)
-    # print(headers)
-
-    # print(lyrics_json)
-    return headers, json_songs
+    global df_songs, headers, lst_json_songs
+    df_songs = pd.read_csv(filepath)
+    headers = list(df_songs.columns)
+    df_songs.to_json(r'lyrics.json', orient='records', lines=True) ### save every row as json in file
 
 
-def create_songs_list(lyrics_dataframe):
-    songs_lst = []
-    for row_index, row in lyrics_dataframe.iterrows():
-        song_artist = row[artist_header_label]
-        song_name = row[song_name_header_label]
-        song_text = row[lyrics_label]
-        songs_lst.append(Song(song_artist, song_name, song_text))
-
-    return songs_lst
+# def get_json_songs():
+#     global json_songs
+#     with open('lyrics.json', 'r') as f:
+#         data = f.read()
+#         json_songs = json.loads(data)
+#     pprint.pprint(json_songs)
 
 
-# def songs_list_to_jsons_list(songs_list):
-#     jsons_songs = []
-#     for song in songs_lst:
-#         json.dump(song)
+def get_list_of_jsons():
+    global lst_json_songs
+    for line in open('lyrics.json', 'r'):
+        lst_json_songs.append(json.loads(line))
 
 
 if __name__ == "__main__":
     read_csv()
-    songs_lst = create_songs_list(json_songs)
-    print(json_songs)
+    get_list_of_jsons()
+    consumer = Consumer(BOOTSTRAP_SERVER, TOPIC_NAME) #for test
+    print(lst_json_songs[0])
+    producer.send(lst_json_songs[0])
+
+    # producer.producer.flush()
+    producer.producer.close()
+
+    for message in consumer:
+        print(consumer)
 
