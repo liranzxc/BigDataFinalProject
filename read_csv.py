@@ -3,22 +3,18 @@ import json
 from baseClasses.consumer import Consumer
 from baseClasses.producer import Producer
 
-df_songs = None
-lst_json_songs = []
-headers = None
-artist_header_label = "artist"
-song_name_header_label = "song_name"
-lyrics_label = "text"
-BOOTSTRAP_SERVER = "172.25.012:9092"
+# artist_header_label = "artist"
+# song_name_header_label = "song_name"
+# lyrics_label = "text"
+BOOTSTRAP_SERVER = "172.25.0.12:9092"
 TOPIC_NAME = "song"
-producer = Producer(BOOTSTRAP_SERVER, TOPIC_NAME)
 
 
-def read_csv(filepath = "datasets/songdata.csv"):
-    global df_songs, headers, lst_json_songs
+def read_csv(filepath="datasets/songdata.csv"):
     df_songs = pd.read_csv(filepath)
     headers = list(df_songs.columns)
-    df_songs.to_json(r'lyrics.json', orient='records', lines=True) ### save every row as json in file
+    songs_json = json.loads(df_songs.to_json(orient='records'))  ### save every row as json in file
+    return df_songs, headers, songs_json
 
 
 # def get_json_songs():
@@ -29,22 +25,8 @@ def read_csv(filepath = "datasets/songdata.csv"):
 #     pprint.pprint(json_songs)
 
 
-def get_list_of_jsons():
-    global lst_json_songs
-    for line in open('lyrics.json', 'r'):
-        lst_json_songs.append(json.loads(line))
-
-
 if __name__ == "__main__":
-    read_csv()
-    get_list_of_jsons()
-    consumer = Consumer(BOOTSTRAP_SERVER, TOPIC_NAME) #for test
-    print(lst_json_songs[0])
-    producer.send(lst_json_songs[0])
-
-    # producer.producer.flush()
-    producer.producer.close()
-
-    for message in consumer:
-        print(consumer)
-
+    df_songs, headers, songs_json = read_csv()
+    producer = Producer(BOOTSTRAP_SERVER, TOPIC_NAME)
+    future = producer.send(songs_json[0])
+    result = future.get(timeout=0.5)
