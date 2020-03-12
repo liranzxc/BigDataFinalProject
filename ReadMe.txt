@@ -22,7 +22,7 @@ have fun :)
 
 ** for close docker need to go directory and execute : docker-compose down
 
-
+Running Ubuntu requires Java 8 version.
 
 ## example run :
 
