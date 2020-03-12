@@ -40,7 +40,7 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: 172.25.0.12
       KAFKA_ZOOKEEPER_CONNECT: 172.25.0.11:2181
       KAFKA_ADVERTISED_PORT: 9092
-      KAFKA_OPTS: -javaagent:/prometheus/jmx_prometheus_javaagent-0.3.1.jar=8080:/prometheus/kafka-0-8-2.yml
+      KAFKA_OPTS: -javaagent:/prometheus/jmx_prometheus_javaagent-0.3.1.jar=8080:kafka/prometheus/kafka-0-8-2.yml
     volumes:
       - ./kafka/prometheus:/prometheus
       - kafka_kafka1:/opt/kafka_2.12-2.2.0/logs
