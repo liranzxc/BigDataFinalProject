@@ -45,7 +45,7 @@ class SongAnalyzer:
         self.word_count = self.count_words()
 
     def __str__(self):
-        t = "Analyzed song {0} by {1}\n".format(self.song.song_name, self.song.artist)
+        t = "Analyzed song {0} by {1}\n".format(self.song.name, self.song.artist)
         t += "The song is {0} words long\n".format(self.word_count)
         t += "Lyrics histogram: {0}".format(self.histogram)
         return t

@@ -2,9 +2,6 @@ import pandas as pd
 import json
 
 
-
-
-
 class CsvService:
     @staticmethod
     def read_csv(filepath="datasets/songdata.csv"):
