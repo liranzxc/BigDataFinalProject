@@ -1,5 +1,9 @@
 {
   "kafkaIp": "172.25.0.12",
   "kafkaPort": "9092",
-  "topics": ["songs", "lyrics"]
+  "songs_topic": "song",
+  "lyrics_topic": "lyrics",
+  "mongodb_ip": "localhost",
+  "mongodb_port:": "27017",
+  mongodb
 }
