@@ -65,6 +65,14 @@ services:
       kafkanet:
         ipv4_address: 172.25.0.14
 
+  mongodb:
+    image: 'bitnami/mongodb:4.0'
+    ports:
+      - "27017:27017"
+    volumes:
+      - 'mongodb_data:/bitnami'
+
+
 networks:
   kafkanet:
     name: kafkanet
@@ -76,9 +84,11 @@ networks:
           gateway: 172.25.0.1
 
 volumes:
+  mongodb_data:
+    driver: local
   kafka_zookeeper:
   kafka_kafka1:
-  kafka_kafka2:
+
 
 
 

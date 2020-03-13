@@ -1,5 +1,0 @@
-{
-  "kafkaIp": "172.25.0.12",
-  "kafkaPort": "9092",
-  "topics": ["songs", "lyrics"]
-}
