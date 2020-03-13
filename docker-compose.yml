@@ -84,11 +84,11 @@ networks:
           gateway: 172.25.0.1
 
 volumes:
-  kafka_zookeeper:
-  kafka_kafka1:
-  kafka_kafka2:
   mongodb_data:
     driver: local
+  kafka_zookeeper:
+  kafka_kafka1:
+
 
 
 
