@@ -7,6 +7,3 @@ class SongProfile:
         self.number_of_words = number_of_words
         self.histogram = histogram
         self.emotion = emotion
-
-    def upload_to_db(self):
-        pass

@@ -5,5 +5,6 @@
   "lyrics_topic": "lyrics",
   "mongodb_ip": "localhost",
   "mongodb_port:": "27017",
-  mongodb
+  "mongodb_name": "test",
+  "mongodb_result_collection": "result"
 }
