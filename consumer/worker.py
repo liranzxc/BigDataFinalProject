@@ -44,10 +44,11 @@ class SongAnalyzer:
         self.histogram = self.create_histogram()
         self.word_count = self.count_words()
 
-    def __repr__(self):
-        print("Analyzed song {0} by {1}".format(self.song.song_name, self.song.artist))
-        print("The song is {0} words long".format(self.word_count))
-        print("Lyrics histogram: {0}".format(self.histogram))
+    def __str__(self):
+        t = "Analyzed song {0} by {1}\n".format(self.song.song_name, self.song.artist)
+        t += "The song is {0} words long\n".format(self.word_count)
+        t += "Lyrics histogram: {0}".format(self.histogram)
+        return t
 
 
 if __name__ == "__main__":
