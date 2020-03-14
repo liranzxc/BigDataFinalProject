@@ -19,3 +19,9 @@ class MongoDbService:
         db = self.client[self.db_name]
         collection = db[self.config["MONGODB_RESULT_COLLECTION"]]
         return collection.insert_many(song_profiles)  ## status from db
+
+    def get_all_records(self):
+        db = self.client[self.db_name]
+        collection = db[self.config["MONGODB_RESULT_COLLECTION"]]
+        return collection.find()
+
