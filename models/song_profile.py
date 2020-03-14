@@ -10,4 +10,13 @@ class SongProfile:
 
     def to_mongodb_document_format(self):
         song_profile_id = self.song.artist + "_" + self.song.name
-        return {"_id": song_profile_id, "number_of_words": self.number_of_words, "histogram": self.histogram, "emotion": self.emotion}
+        return {"_id": song_profile_id, "number_of_words": self.number_of_words, "histogram": self.histogram,
+                "emotion": self.emotion}
+
+    def __str__(self):
+        t = "Analyzed song {0} by {1}\n".format(self.song.name, self.song.artist)
+        t += "The song is {0} words long\n".format(self.number_of_words)
+        t += "Lyrics histogram: {0}\n".format(self.histogram)
+        t += "emotion: {0}".format(self.emotion)
+
+        return t
