@@ -8,7 +8,7 @@ from pyspark.sql.functions import col
 
 
 class NRC:
-    def __init__(self, filePath="../datasets/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt"):
+    def __init__(self, filePath="./datasets/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt"):
         self.sc = SparkContext.getOrCreate(SparkConf().setMaster("local[*]"))
         print("connected to spark")
         df = sqlContext \

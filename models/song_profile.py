@@ -13,7 +13,7 @@ class SongProfile:
     def to_mongodb_document_format(self):
         return {"number_of_words": self.number_of_words, "histogram": self.histogram,
                 "emotion": self.emotion, "song": json.dumps(self.song, default=lambda o: o.__dict__,
-                                                            sort_keys=True, indent=4)}  # todo add song to json
+                                                            sort_keys=True, indent=4)}  # todo make more nice
 
     def __str__(self):
         t = "Analyzed song {0} by {1}\n".format(self.song.name, self.song.artist)
