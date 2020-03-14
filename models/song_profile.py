@@ -8,5 +8,6 @@ class SongProfile:
         self.histogram = histogram
         self.emotion = emotion
 
-    def upload_to_db(self):
-        pass
+    def to_mongodb_document_format(self):
+        song_profile_id = self.song.artist + "_" + self.song.name
+        return {"_id": song_profile_id, "number_of_words": self.number_of_words, "histogram": self.histogram, "emotion": self.emotion}

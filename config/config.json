@@ -4,5 +4,7 @@
   "UPLOAD_TOPIC": "test3",
   "MONGODB_HOST": "localhost",
   "MONGODB_PORT:": "27017",
+  "MONGODB_NAME": "main",
+  "MONGODB_RESULT_COLLECTION": "result",
   "BATCH_SIZE" : 500
 }

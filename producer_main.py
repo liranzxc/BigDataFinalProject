@@ -1,6 +1,6 @@
 from baseClasses.producer import Producer
 from config.configService import ConfigService
-from utils.csvService import CsvService
+from services.csvService import CsvService
 
 # producer main
 
