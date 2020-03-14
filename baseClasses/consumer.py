@@ -7,7 +7,7 @@ class Consumer:
         self.consumer = KafkaConsumer(
             topicReceive,
             bootstrap_servers=[kafkaServer],
-            group_id='liran', api_version=(0, 11, 5))
+            api_version=(0, 11, 5))
         self.topicReceive = topicReceive
 
     def startReceive(self, methodMessages):
