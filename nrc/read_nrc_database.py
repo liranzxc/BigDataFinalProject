@@ -1,5 +1,7 @@
 import pandas as pd
 
+from services.spark_service import SparkService
+from services.config_service import ConfigService
 from pyspark import SparkConf
 from pyspark import SparkContext
 from pyspark.shell import sqlContext
@@ -9,7 +11,9 @@ from pyspark.sql.functions import col
 
 class NRC:
     def __init__(self, filePath="./datasets/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt"):
-        self.sc = SparkContext.getOrCreate(SparkConf().setMaster("local[*]"))
+        configService = ConfigService()
+        self.config = configService.getConfig()
+        self.sc = SparkService(self.config).get_spark_context()
         print("connected to spark")
         df = sqlContext \
             .read.format("com.databricks.spark.csv") \

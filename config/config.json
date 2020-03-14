@@ -6,5 +6,6 @@
   "MONGODB_PORT": "27017",
   "MONGODB_DB_NAME": "songs",
   "MONGODB_RESULT_COLLECTION": "result",
+  "SPARK_LOCAL": "local[*]",
   "BATCH_SIZE" : 5
 }
