@@ -3,8 +3,8 @@
   "KAFKA_PORT": "9092",
   "UPLOAD_TOPIC": "test3",
   "MONGODB_HOST": "localhost",
-  "MONGODB_PORT:": "27017",
+  "MONGODB_PORT": "27017",
   "MONGODB_DB_NAME": "songs",
   "MONGODB_RESULT_COLLECTION": "result",
-  "BATCH_SIZE" : 200
+  "BATCH_SIZE" : 5
 }

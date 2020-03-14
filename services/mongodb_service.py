@@ -4,10 +4,11 @@ from services.config_service import ConfigService
 
 
 class MongoDbService:
-    def __init__(self):
-        self.config = ConfigService().getConfig()
-        self.client = self._get_mongo_db_client(self.config["MONGODB_HOST"], self.config["MONGODB_PORT"])
-        self.db = self.config["MONGODB_DB_NAME"]
+    def __init__(self, config):
+        self.config = config
+        print(config)
+        self.client = self._get_mongo_db_client(config["MONGODB_HOST"], config["MONGODB_PORT"])
+        self.db_name = self.config["MONGODB_DB_NAME"]
 
     def _get_mongo_db_client(self, hostname: str, port: str):
         myClient = pymongo.MongoClient("mongodb://" + hostname + ":" + port + "/",
@@ -15,5 +16,6 @@ class MongoDbService:
         return myClient
 
     def upload_song_profiles(self, song_profiles: list):
-        collection = self.db["MONGODB_RESULT_COLLECTION"]
-        collection.insert_many(song_profiles)
+        db = self.client[self.db_name]
+        collection = db[self.config["MONGODB_RESULT_COLLECTION"]]
+        return collection.insert_many(song_profiles)  ## status from db

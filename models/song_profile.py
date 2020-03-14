@@ -1,4 +1,5 @@
 from models.song import Song
+import uuid
 
 
 class SongProfile:
@@ -9,9 +10,8 @@ class SongProfile:
         self.emotion = emotion
 
     def to_mongodb_document_format(self):
-        song_profile_id = self.song.artist + "_" + self.song.name
-        return {"_id": song_profile_id, "number_of_words": self.number_of_words, "histogram": self.histogram,
-                "emotion": self.emotion}
+        return {"number_of_words": self.number_of_words, "histogram": self.histogram,
+                "emotion": self.emotion}  # todo add song to json
 
     def __str__(self):
         t = "Analyzed song {0} by {1}\n".format(self.song.name, self.song.artist)
