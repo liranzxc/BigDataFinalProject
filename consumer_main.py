@@ -6,6 +6,7 @@ from services.song_analyzer_service import SongAnalyzerService
 from pyspark import SparkContext, SparkConf
 import json
 
+
 def doWork(data):
     song_profiles = []
     for song_json in data:
@@ -14,9 +15,6 @@ def doWork(data):
 
     # save song_profiles on db mongo
     songs_profile_jsons_array = list(map(lambda sp: sp.to_mongodb_document_format(), song_profiles))
-
-    # songs_profile_jsons_array = json.dumps(songs_profile_jsons_array)
-    # json.loads(songs_profile_jsons_array)
 
     print(mongodb_service.upload_song_profiles(songs_profile_jsons_array))
 
