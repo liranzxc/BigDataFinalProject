@@ -1,6 +1,6 @@
 from baseClasses.producer import Producer
-from config.configService import ConfigService
-from services.csvService import CsvService
+from services.config_service import ConfigService
+from services.csv_service import CsvService
 
 # producer main
 
@@ -22,6 +22,6 @@ if __name__ == "__main__":
         future = producer.send(batch)
         result = future.get(timeout=0.5)
         print(result)
-        print("producer send batch {} ~ {}".format(i,i+batchSize))
+        print("producer send batch {} ~ {}".format(i, i + batchSize))
 
     print("producer finish send jobs")
