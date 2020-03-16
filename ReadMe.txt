@@ -1,22 +1,27 @@
 
 
-for started a spark cluster first you need to download :
+To start a spark cluster, you need to download :
 
-- docker
-- docker-compose
+- docker 1.25.0
+- docker-compose 1.25.0
 
 in the root project we have docker-compose
 you must be in "CMD" or terminal on the directory that contains docker-compose
 
 # execute command : docker-compose up -d
 
-please wait  , cluster spark will be created  ( master + 1 worker)
+please wait,a spark cluster will be created  (master + 1 worker)
 
-on the project have spark_example folder that contains a test script . please run him before started .
+on the project have spark_example folder that contains a test script. please run him before beginning to see if spark works.
 
-the script connected to spark and execute a "ADD" operation .
+The script is connected to spark and executes an "ADD" operation.
 
-please note need to pip install all packages .
+please note need to pip install all packages.
+pandas
+kafka-python
+pymongo
+findspark
+pyspark
 
 have fun :)
 
@@ -30,6 +35,8 @@ Running Ubuntu requires Java 8 version.
 WARNING: The Docker Engine you're using is running in swarm mode.
 
 Compose does not use swarm mode to deploy services to multiple nodes in a swarm. All containers will be scheduled on the current node.
+
+To enter the kafka manager ui - go to URL http://172.25.0.14:9000/
 
 To deploy your application across the swarm, use `docker stack deploy`.
 

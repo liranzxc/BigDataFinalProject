@@ -7,5 +7,6 @@
   "MONGODB_DB_NAME": "songs",
   "MONGODB_RESULT_COLLECTION": "result",
   "SPARK_LOCAL": "local[*]",
-  "BATCH_SIZE" : 5
+  "BATCH_SIZE" : 5,
+  "NUMBER_OF_EMOTIONS" : 4
 }

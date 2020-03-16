@@ -1,26 +1,55 @@
-# SparkContext.getOrCreate(SparkConf().setMaster("local[*]"))
+from utils.utilities import Utilities as ut
 from models.song import Song
 from models.song_profile import SongProfile
 
 
 class SongAnalyzerService:
-    def __init__(self, sc):
+    def __init__(self, sc, nrc):
         self.sc = sc
+        self.nrc = nrc
 
     # counts amount of words in the string
     def _count_words(self, rdd_lyrics_song):
         return rdd_lyrics_song.count()
 
-    def _create_histogram(self, rdd_lyrics_song):
-        return rdd_lyrics_song.map(lambda word: (word.lower(), 1)).reduceByKey(lambda a, b: a + b).collectAsMap()
+    def _create_histogram(self, rdd_lyrics):
+        return rdd_lyrics.map(lambda word: word.lower()).countByValue()
 
-    def _init_lyrics_rdd(self, song: Song):
-        return self.sc.parallelize([song.lyrics]).flatMap(lambda line: line.split())\
-            .map(lambda word : word.replace(".", ""))
+    def _get_words_rdd(self, lyrics: str):
+        return self.sc.parallelize([lyrics]).flatMap(lambda line: ut.clean_sentence(line))
 
-    def analyze(self, song: Song):
-        rdd_lyrics_song = self._init_lyrics_rdd(song)
-        histogram = self._create_histogram(rdd_lyrics_song)
+    def __get_emotion_histogram(self, word_histogram_map):
+        emotions_string = r''
+        for word in word_histogram_map:
+            emotion_list = self.nrc.get_emotions_association(word)
+            strength = word_histogram_map.get(word)
+            for emotion in emotion_list:
+                emotions_string += (emotion + " ") * strength
+
+        emotion_histogram = self._create_histogram(self._get_words_rdd(emotions_string))
+        return emotion_histogram
+
+    def analyze(self, song: Song, num_emotions=3):
+        rdd_lyrics_song = self._get_words_rdd(song.lyrics)
         word_count = self._count_words(rdd_lyrics_song)
-        return SongProfile(song, word_count, histogram, None)  # emo none
+        histogram_words = self._create_histogram(rdd_lyrics_song)
+        histogram_emotions = self.__get_emotion_histogram(word_histogram_map=histogram_words)
+        ordered_emotions = sorted(histogram_emotions)
+        emotion = ""
+        for word in ordered_emotions[:num_emotions]:
+            emotion += word + " "
 
+        return SongProfile(song, word_count, histogram_words, emotion)  # emotion
+
+
+if __name__ == "__main__":
+    pass
+    # sc = SparkContext.getOrCreate(SparkConf().setMaster("local[*]"))
+    # lyrics = "Black is the night.34567.., metal@# w$^*e fight Power amps set %#to explode. Energy screams, magic and dreams Satan records the first note. We chime the bell, chaos and hell Metal for maniacs pure. Faster than steel, fortune on wheels Brain haemorrhage is the cure."
+    # song1 = Song("Venom", "Black Metal", lyrics)
+    # nrc = NRC()
+    # analyzer = SongAnalyzerService(sc, nrc)
+    # print(analyzer.analyze(song1))
+
+    # lyrics = ut.clean_sentence(lyrics)
+    # print(lyrics)
