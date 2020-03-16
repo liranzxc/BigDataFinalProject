@@ -1,7 +1,7 @@
 {
   "KAFKA_HOST": "172.25.0.12",
   "KAFKA_PORT": "9092",
-  "UPLOAD_TOPIC": "test3",
+  "UPLOAD_TOPIC": "test8",
   "MONGODB_HOST": "localhost",
   "MONGODB_PORT": "27017",
   "MONGODB_DB_NAME": "songs",

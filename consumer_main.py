@@ -7,8 +7,8 @@ from services.song_analyzer_service import SongAnalyzerService
 from pyspark import SparkContext, SparkConf
 import json
 
-
-# TODO need to with spark
+#
+# # TODO need to with spark
 def do_work(data):
     song_profiles = []
     print("Consumer received a new batch")
@@ -26,9 +26,8 @@ def do_work(data):
 
 
 if __name__ == "__main__":
-    sc = SparkContext.getOrCreate(SparkConf().setMaster("local[*]"))
-
     config = ConfigService()
+    sc = SparkContext.getOrCreate(SparkConf().setMaster(config.spark_local))
 
     song_analyzer = SongAnalyzerService(sc, NRC())
     mongodb_service = MongoDbService(config)
@@ -36,7 +35,3 @@ if __name__ == "__main__":
     BOOTSTRAP_SERVER = config.kafka_server_address
     worker = Consumer(BOOTSTRAP_SERVER, config.kafka_upload_topic)
     worker.startReceive(do_work)
-
-    # lyrics = "Black is the night, metal we fight Power amps set to explode. Energy screams, magic and dreams Satan records the first note. We chime the bell, chaos and hell Metal for maniacs pure. Faster than steel, fortune on wheels Brain haemorrhage is the cure."
-    # analyzer = SongAnalyzer(Song("Venom", "Black Metal", lyrics))
-    # print(analyzer)
