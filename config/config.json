@@ -6,7 +6,23 @@
   "MONGODB_PORT": "27017",
   "MONGODB_DB_NAME": "songs",
   "MONGODB_RESULT_COLLECTION": "result",
+  "MONGODB_CONNECTION_TIMEOUT_MS": 5000,
+  "MONGODB_SOCKET_TIMEOUT_MS": 5000,
+  "MONGODB_SERVER_SELECTION_TIMEOUT_MS": 2000,
   "SPARK_LOCAL": "local[*]",
   "BATCH_SIZE" : 5,
-  "NUMBER_OF_EMOTIONS" : 4
+  "BATCH_SEND_TIMEOUT" : 0.5,
+  "NUMBER_OF_EMOTIONS" : 4,
+  "BASE_PATH" : "~/Documents/git/BigDataFinalProject/",
+  "NRC_EMOTION_LEX": "datasets/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt",
+  "EMOLEX_WORD_COL": "word",
+  "EMOLEX_ASSOCIATION_COL": "association",
+  "EMOLEX_EMOTION_COL": "emotion",
+  "EMOLEX_DELIMITER": "\t",
+  "EMOLEX_FORMAT": "com.databricks.spark.csv",
+
+
+  "SONG_JSON_ARTIST": "artist",
+  "SONG_JSON_LYRICS": "text",
+  "SONG_JSON_NAME": "song_name"
 }

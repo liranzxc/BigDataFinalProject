@@ -1,8 +1,7 @@
 from services.config_service import ConfigService
 from services.mongodb_service import MongoDbService
 
-configService = ConfigService()
-config = configService.getConfig()
+config = ConfigService()
 
 mongodb_service = MongoDbService(config)
 

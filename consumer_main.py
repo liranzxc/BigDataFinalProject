@@ -15,7 +15,8 @@ def do_work(data):
     for song_json in data:
         # analyzer song and get result
         print("Consumer working on song")
-        analyze = song_analyzer.analyze(Song.from_json_to_song(song_json), num_emotions=num_emotions)
+        song = Song.from_json_to_song(song_json)
+        analyze = song_analyzer.analyze(song, num_emotions=num_emotions)
         print(analyze)
         song_profiles.append(analyze)
 
@@ -27,14 +28,13 @@ def do_work(data):
 if __name__ == "__main__":
     sc = SparkContext.getOrCreate(SparkConf().setMaster("local[*]"))
 
-    configService = ConfigService()
-    config = configService.getConfig()
+    config = ConfigService()
 
     song_analyzer = SongAnalyzerService(sc, NRC())
     mongodb_service = MongoDbService(config)
-    num_emotions = config["NUMBER_OF_EMOTIONS"]
-    BOOTSTRAP_SERVER = config["KAFKA_HOST"] + ":" + config["KAFKA_PORT"]
-    worker = Consumer(BOOTSTRAP_SERVER, config["UPLOAD_TOPIC"])
+    num_emotions = config.number_emotions
+    BOOTSTRAP_SERVER = config.kafka_server_address
+    worker = Consumer(BOOTSTRAP_SERVER, config.kafka_upload_topic)
     worker.startReceive(do_work)
 
     # lyrics = "Black is the night, metal we fight Power amps set to explode. Energy screams, magic and dreams Satan records the first note. We chime the bell, chaos and hell Metal for maniacs pure. Faster than steel, fortune on wheels Brain haemorrhage is the cure."
