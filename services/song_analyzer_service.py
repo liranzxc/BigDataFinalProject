@@ -15,8 +15,14 @@ class SongAnalyzerService:
     def _create_histogram(self, rdd_lyrics):
         return rdd_lyrics.map(lambda word: word.lower()).countByValue()
 
-    def _get_words_rdd(self, lyrics: str):
-        return self.sc.parallelize([lyrics]).flatMap(lambda line: ut.clean_sentence(line))
+    #   Use clean=True if cleaning is needed
+    #   Otherwise, the function assumes the lines are already clean, this is faster to compute
+    def _get_words_rdd(self, lyrics: str, clean=True):
+        if clean:
+            rdd = self.sc.parallelize([lyrics]).flatMap(lambda line: ut.clean_sentence(line))
+        else:
+            rdd = self.sc.parallelize([lyrics]).flatMap(lambda line: line.split())
+        return rdd
 
     def __get_emotion_histogram(self, word_histogram_map):
         emotions_string = r''
@@ -26,7 +32,7 @@ class SongAnalyzerService:
             for emotion in emotion_list:
                 emotions_string += (emotion + " ") * strength
 
-        emotion_histogram = self._create_histogram(self._get_words_rdd(emotions_string))
+        emotion_histogram = self._create_histogram(self._get_words_rdd(emotions_string, clean=False))
         return emotion_histogram
 
     def analyze(self, song: Song, num_emotions=3):

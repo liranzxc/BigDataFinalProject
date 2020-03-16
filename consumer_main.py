@@ -9,7 +9,7 @@ import json
 
 
 # TODO need to with spark
-def doWork(data):
+def do_work(data):
     song_profiles = []
     print("Consumer received a new batch")
     for song_json in data:
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     num_emotions = config["NUMBER_OF_EMOTIONS"]
     BOOTSTRAP_SERVER = config["KAFKA_HOST"] + ":" + config["KAFKA_PORT"]
     worker = Consumer(BOOTSTRAP_SERVER, config["UPLOAD_TOPIC"])
-    worker.startReceive(doWork)
+    worker.startReceive(do_work)
 
     # lyrics = "Black is the night, metal we fight Power amps set to explode. Energy screams, magic and dreams Satan records the first note. We chime the bell, chaos and hell Metal for maniacs pure. Faster than steel, fortune on wheels Brain haemorrhage is the cure."
     # analyzer = SongAnalyzer(Song("Venom", "Black Metal", lyrics))
