@@ -6,22 +6,24 @@ from services.config_service import ConfigService
 class MongoDbService:
     def __init__(self, config):
         self.config = config
-        print(config)
-        self.client = self._get_mongo_db_client(config["MONGODB_HOST"], config["MONGODB_PORT"])
-        self.db_name = self.config["MONGODB_DB_NAME"]
+        print(self.config)
+        self.client = self._get_mongo_db_client()
+        self.db_name = self.config.mongodb_db_name
+        self.db_result = self.config.mongodb_result_collection
 
-    def _get_mongo_db_client(self, hostname: str, port: str):
-        myClient = pymongo.MongoClient("mongodb://" + hostname + ":" + port + "/",
-                                       connectTimeoutMS=5000, socketTimeoutMS=5000, serverSelectionTimeoutMS=2000)
-        return myClient
+    def _get_mongo_db_client(self):
+        my_client = pymongo.MongoClient(self.config.mongodb_address,
+                                        connectTimeoutMS=self.config.mongodb_connection_timeout,
+                                        socketTimeoutMS=self.config.mongodb_socket_timeout,
+                                        serverSelectionTimeoutMS=self.config.mongodb_server_selection_timeout)
+        return my_client
 
     def upload_song_profiles(self, song_profiles: list):
         db = self.client[self.db_name]
-        collection = db[self.config["MONGODB_RESULT_COLLECTION"]]
+        collection = db[self.db_result]
         return collection.insert_many(song_profiles)  ## status from db
 
     def get_all_records(self):
         db = self.client[self.db_name]
-        collection = db[self.config["MONGODB_RESULT_COLLECTION"]]
+        collection = db[self.db_result]
         return collection.find()
-

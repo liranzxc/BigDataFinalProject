@@ -6,13 +6,13 @@ from nltk.stem import WordNetLemmatizer
 
 
 class NRC:
-    def __init__(self, file_path="datasets/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt"):
-        config_service = ConfigService()
-        self.config = config_service.getConfig()
+
+    def __init__(self):
+        self.config = ConfigService()
         print("nrc connected to spark")
         df = sqlContext \
-            .read.format("com.databricks.spark.csv") \
-            .schema(self.schema_file()).option("delimiter", "\t").load(file_path)
+            .read.format(self.config.spark_emolex_format) \
+            .schema(self.schema_file()).option("delimiter", self.config.emolex_delimiter).load(self.config.emotion_lex_path)
         clean_df = df.na.drop()
         self.emotion_lex_df = clean_df
         self.lemmatizer = WordNetLemmatizer()
@@ -20,19 +20,20 @@ class NRC:
     def get_emotions_association(self, word):
         word = self.lemmatizer.lemmatize(word)
         filter_df = self.emotion_lex_df \
-            .filter((col("word") == word) & (col("association") == 1)) \
-            .select("emotion") \
+            .filter((col(self.config.emolex_word_col) == word) & (col(self.config.emolex_association_col) == 1)) \
+            .select(self.config.emolex_emotion_col) \
             .collect()
         new_list = [row.emotion for row in filter_df]
         return new_list
 
     @staticmethod
     def schema_file():
+        config = ConfigService()
         schema = types.StructType(
             [
-                types.StructField('word', types.StringType()),
-                types.StructField('emotion', types.StringType()),
-                types.StructField('association', types.IntegerType())
+                types.StructField(config.emolex_word_col, types.StringType()),
+                types.StructField(config.emolex_emotion_col, types.StringType()),
+                types.StructField(config.emolex_association_col, types.IntegerType())
             ])
         return schema
 

@@ -6,21 +6,20 @@ from services.csv_service import CsvService
 
 if __name__ == "__main__":
     # read config file
-    configService = ConfigService()
-    config = configService.getConfig()
+    config = ConfigService()
 
     # load csv
     df_songs, headers, songs_json = CsvService().read_csv()
 
     # upload songs via producer
-    BOOTSTRAP_SERVER = config["KAFKA_HOST"] + ":" + config["KAFKA_PORT"]
-    producer = Producer(BOOTSTRAP_SERVER, config["UPLOAD_TOPIC"])
+    BOOTSTRAP_SERVER = config.kafka_server_address
+    producer = Producer(BOOTSTRAP_SERVER, config.kafka_upload_topic)
 
-    batchSize = config["BATCH_SIZE"]
+    batchSize = config.batch_size
     for i in range(0, len(songs_json), batchSize):
         batch = songs_json[i:i + batchSize]  # the result might be shorter than batchsize at the end
         future = producer.send(batch)
-        result = future.get(timeout=0.5)
+        result = future.get(timeout=config.send_batch_timeout)
         print(result)
         print("producer send batch {} ~ {}".format(i, i + batchSize))
 
