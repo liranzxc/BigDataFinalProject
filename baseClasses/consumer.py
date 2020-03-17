@@ -8,8 +8,7 @@ class Consumer:
             topic_receive,
             auto_offset_reset='earliest',
             bootstrap_servers=[kafka_server],
-            group_id=None,
-            api_version=(0, 11, 5))
+            group_id=None)
         self.topic_receive = topic_receive
 
     def startReceive(self, method_messages):
