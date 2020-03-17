@@ -1,5 +1,6 @@
 import json
 
+# TODO change config architecture
 
 class ConfigService:
     @staticmethod

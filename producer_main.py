@@ -7,7 +7,7 @@ from services.csv_service import CsvService
 if __name__ == "__main__":
     # read config file
     config = ConfigService()
-
+    # TODO do wget on csv file instead of hardcoded into docker
     # load csv
     df_songs, headers, songs_json = CsvService().read_csv()
 
