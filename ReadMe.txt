@@ -22,7 +22,10 @@ kafka-python
 pymongo
 findspark
 pyspark
+nltk
 
+in the python console write
+nltk.download('wordnet')
 have fun :)
 
 ** for close docker need to go directory and execute : docker-compose down
