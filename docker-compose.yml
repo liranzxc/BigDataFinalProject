@@ -70,6 +70,8 @@ services:
       dockerfile: ./Dockerfile
       context: .
     command: python producer_main.py
+    environment:
+      UPLOAD_TOPIC: "test20"
     depends_on:
       - "zookeeper"
       - "kafka1"
@@ -77,18 +79,18 @@ services:
       kafkanet:
         ipv4_address: 172.25.0.13
 
-  consumer:
-    build:
-      dockerfile: ./Dockerfile
-      context: .
-    command: python consumer_main.py
-    depends_on:
-      - "zookeeper"
-      - "kafka1"
-      - "mongodb"
-    networks:
-      kafkanet:
-        ipv4_address: 172.25.0.15
+#  consumer:
+#    build:
+#      dockerfile: ./Dockerfile
+#      context: .
+#    command: python consumer_main.py
+#    depends_on:
+#      - "zookeeper"
+#      - "kafka1"
+#      - "mongodb"
+#    networks:
+#      kafkanet:
+#        ipv4_address: 172.25.0.15
 
 
   mongodb:
