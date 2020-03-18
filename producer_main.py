@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
     producer = Producer(BOOTSTRAP_SERVER, config.kafka_upload_topic)
 
-    batchSize = config.batch_size
+    batchSize = int(config.batch_size)
     for i in range(0, len(songs_json), batchSize):
         batch = songs_json[i:i + batchSize]  # the result might be shorter than batchsize at the end
         future = producer.send(batch)
