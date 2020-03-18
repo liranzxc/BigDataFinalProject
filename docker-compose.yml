@@ -67,14 +67,29 @@ services:
 
   producer:
     build:
-      dockerfile: ./producer/Dockerfile
+      dockerfile: ./Dockerfile
       context: .
+    command: python producer_main.py
     depends_on:
       - "zookeeper"
       - "kafka1"
     networks:
       kafkanet:
         ipv4_address: 172.25.0.13
+
+  consumer:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    command: python consumer_main.py
+    depends_on:
+      - "zookeeper"
+      - "kafka1"
+      - "mongodb"
+    networks:
+      kafkanet:
+        ipv4_address: 172.25.0.13
+
 
   mongodb:
     image: 'bitnami/mongodb:4.0'
