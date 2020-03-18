@@ -1,6 +1,7 @@
 from models.song_profile import SongProfile
 import pymongo
 from services.config_service import ConfigService
+from bson.json_util import dumps
 
 
 class MongoDbService:
@@ -23,7 +24,17 @@ class MongoDbService:
         collection = db[self.db_result]
         return collection.insert_many(song_profiles)  ## status from db
 
-    def get_all_records(self):
+    def get_all_records(self, page=-1, size=-1):
         db = self.client[self.db_name]
         collection = db[self.db_result]
-        return collection.find()
+        return collection.find().skip(page * size).limit(size)
+
+    def get_counts(self):
+        db = self.client[self.db_name]
+        collection = db[self.db_result]
+        return collection.find().count()
+
+    def delete_all_records(self):
+        db = self.client[self.db_name]
+        collection = db[self.db_result]
+        return collection.remove()

@@ -1,0 +1,7 @@
+docker-compose.yml
+lyrics.json
+mongodb_get_result_main.py
+kafka
+spark_example
+.gitignore
+.git
