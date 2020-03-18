@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3.7'
 services:
   spark-master:
     image: bde2020/spark-master:2.4.4-hadoop2.7
@@ -71,7 +71,7 @@ services:
       context: .
     command: python producer_main.py
     environment:
-      UPLOAD_TOPIC: "test20"
+      UPLOAD_TOPIC: "test25"
     depends_on:
       - "zookeeper"
       - "kafka1"
@@ -79,18 +79,20 @@ services:
       kafkanet:
         ipv4_address: 172.25.0.13
 
-  consumer:
-    build:
-      dockerfile: ./Dockerfile
-      context: .
-    command: python consumer_main.py
-    depends_on:
-      - "zookeeper"
-      - "kafka1"
-      - "mongodb"
-    networks:
-      kafkanet:
-        ipv4_address: 172.25.0.15
+#  consumer:
+#    build:
+#      dockerfile: ./Dockerfile
+#      context: .
+#    environment:
+#      UPLOAD_TOPIC: "test25"
+#    command: python consumer_main.py
+#    depends_on:
+#      - "zookeeper"
+#      - "kafka1"
+#      - "mongodb"
+#    networks:
+#      kafkanet:
+#        ipv4_address: 172.25.0.15
 
 
   mongodb:
@@ -109,8 +111,6 @@ networks:
       driver: default
       config:
         - subnet: 172.25.0.0/16
-          gateway: 172.25.0.1
-
 volumes:
   mongodb_data:
     driver: local
