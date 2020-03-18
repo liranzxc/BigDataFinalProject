@@ -16,16 +16,15 @@ on the project have spark_example folder that contains a test script. please run
 
 The script is connected to spark and executes an "ADD" operation.
 
-please note need to pip install all packages.
-pandas
-kafka-python
-pymongo
-findspark
-pyspark
-nltk
+please note need to pip install all packages in requirements
 
 in the python console write
 nltk.download('wordnet')
+
+run in the folder context
+docker build -t {image-name} .
+make sure docker-compose for producer/consumer use the same image-name you built with.
+
 have fun :)
 
 ** for close docker need to go directory and execute : docker-compose down
