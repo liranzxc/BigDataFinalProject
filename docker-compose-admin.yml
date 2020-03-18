@@ -20,6 +20,7 @@ services:
       UPLOAD_TOPIC: "test25"
       KAFKA_HOST: "kafka"
       SPARK_LOCAL: "spark://spark-master:7077"
+      MONGODB_HOST : "mongodb"
     networks:
       - app-tier
 
