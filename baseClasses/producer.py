@@ -6,7 +6,7 @@ import json
 class Producer:
     def __init__(self, kafka_server, topic_send):
         self.topicSend = topic_send
-        self.producer = KafkaProducer(bootstrap_servers=[kafka_server])
+        self.producer = KafkaProducer(bootstrap_servers=[kafka_server],sasl_plain_username="user",sasl_plain_password="bitnami")
         # value_serializer=lambda x: dumps(x).encode('utf-8')))
 
     def send(self, message):

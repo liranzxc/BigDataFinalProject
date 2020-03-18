@@ -6,17 +6,15 @@ import logging
 
 if __name__ == "__main__":
     # read config file
-    logger = logging.getLogger("logger producer")
-
     config = ConfigService()
-    logger.debug("after config")
+    print("after config")
     # load csv
     df_songs, headers, songs_json = CsvService().read_csv()
-    logger.debug("after csv")
+    print("after csv")
     # upload songs via producer
     BOOTSTRAP_SERVER = config.kafka_server_address
 
-    logger.debug(BOOTSTRAP_SERVER)
+    print(BOOTSTRAP_SERVER)
 
     producer = Producer(BOOTSTRAP_SERVER, config.kafka_upload_topic)
 

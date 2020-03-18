@@ -56,6 +56,19 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
     depends_on:
       - zookeeper
+  producer:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    command: python producer_main.py
+    environment:
+      UPLOAD_TOPIC: "test25"
+      KAFKA_HOST : 'kafka'
+    depends_on:
+      - "zookeeper"
+      - "kafka"
+    networks:
+      - app-tier
 
 
 
