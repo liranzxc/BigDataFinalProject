@@ -27,6 +27,7 @@ def do_work(data):
 
 if __name__ == "__main__":
     config = ConfigService()
+    print("here after config")
     sc = SparkContext.getOrCreate(SparkConf().setMaster(config.spark_local))
 
     song_analyzer = SongAnalyzerService(sc, NRC())
