@@ -4,7 +4,7 @@ import os
 
 class ConfigService:
     def __init__(self):
-        self.kafka_host = os.getenv("KAFKA_HOST", "172.25.0.12")
+        self.kafka_host = os.getenv("KAFKA_HOST", "localhost")
         self.kafka_port = os.getenv("KAFKA_PORT", "9092")
         self.kafka_upload_topic = os.getenv("UPLOAD_TOPIC", "test8")
         self.mongodb_host = os.getenv("MONGODB_HOST", "localhost")

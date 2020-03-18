@@ -6,6 +6,8 @@ from services.mongodb_service import MongoDbService
 from services.song_analyzer_service import SongAnalyzerService
 from pyspark import SparkContext, SparkConf
 import json
+import nltk
+
 
 #
 # # TODO need to with spark
@@ -26,9 +28,15 @@ def do_work(data):
 
 
 if __name__ == "__main__":
+    print('downloading wordnet...')
+    nltk.download('wordnet')
+    print('finish download wordnet.')
+
     config = ConfigService()
     print("here after config")
     sc = SparkContext.getOrCreate(SparkConf().setMaster(config.spark_local))
+
+    print("after sc started")
 
     song_analyzer = SongAnalyzerService(sc, NRC())
     mongodb_service = MongoDbService(config)

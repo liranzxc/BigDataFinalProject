@@ -9,4 +9,3 @@ RUN pip install -r ./requirements.txt
 
 
 COPY . /opt/app
-RUN python nltk_download.py

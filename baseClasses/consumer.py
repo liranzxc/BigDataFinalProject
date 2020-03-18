@@ -8,6 +8,7 @@ class Consumer:
             topic_receive,
             auto_offset_reset='earliest',
             bootstrap_servers=[kafka_server],
+            sasl_plain_username="user", sasl_plain_password="bitnami",
             group_id=None)
         self.topic_receive = topic_receive
 

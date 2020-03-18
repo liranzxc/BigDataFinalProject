@@ -69,6 +69,21 @@ services:
       - "kafka"
     networks:
       - app-tier
+  consumer:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    command: python consumer_main.py
+    environment:
+      UPLOAD_TOPIC: "test25"
+      KAFKA_HOST: "kafka"
+      MONGODB_HOST: "mongodb"
+      SPARK_LOCAL : "spark://spark-master:7077"
+    depends_on:
+      - "zookeeper"
+      - "kafka"
+    networks:
+      - app-tier
 
 
 
