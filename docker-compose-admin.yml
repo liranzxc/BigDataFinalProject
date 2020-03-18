@@ -8,6 +8,7 @@ services:
     environment:
       UPLOAD_TOPIC: "test25"
       KAFKA_HOST: "kafka"
+      BATCH_SIZE : 5
     networks:
       - app-tier
 
@@ -21,6 +22,7 @@ services:
       KAFKA_HOST: "kafka"
       SPARK_LOCAL: "spark://spark-master:7077"
       MONGODB_HOST : "mongodb"
+      BATCH_SIZE : 5
     networks:
       - app-tier
 

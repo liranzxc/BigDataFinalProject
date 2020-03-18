@@ -20,7 +20,7 @@ class ConfigService:
         self.emolex_emotion_col = "emotion"
         self.emolex_delimiter = "\t"
         self.number_emotions = os.getenv("NUMBER_OF_EMOTIONS", 4)
-        self.batch_size = os.getenv("BATCH_SIZE", 400)
+        self.batch_size = os.getenv("BATCH_SIZE", 5)
         self.send_batch_timeout = 0.5
         self.spark_local = os.getenv("SPARK_LOCAL", "local[*]")
         self.spark_emolex_format = "com.databricks.spark.csv"

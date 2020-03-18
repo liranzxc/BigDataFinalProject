@@ -17,6 +17,7 @@ class MongoDbService:
                                         connectTimeoutMS=self.config.mongodb_connection_timeout,
                                         socketTimeoutMS=self.config.mongodb_socket_timeout,
                                         serverSelectionTimeoutMS=self.config.mongodb_server_selection_timeout)
+        print(my_client)
         return my_client
 
     def upload_song_profiles(self, song_profiles: list):

@@ -33,13 +33,14 @@ if __name__ == "__main__":
     print('finish download wordnet.')
 
     config = ConfigService()
+    mongodb_service = MongoDbService(config)
     print("here after config")
-    sc = SparkContext.getOrCreate(SparkConf().setMaster(config.spark_local))
+
 
     print("after sc started")
-
+    sc = SparkContext.getOrCreate(SparkConf().setMaster(config.spark_local))
     song_analyzer = SongAnalyzerService(sc, NRC())
-    mongodb_service = MongoDbService(config)
+
     num_emotions = config.number_emotions
     BOOTSTRAP_SERVER = config.kafka_server_address
     worker = Consumer(BOOTSTRAP_SERVER, config.kafka_upload_topic)
