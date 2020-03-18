@@ -4,56 +4,27 @@ services:
     build:
       dockerfile: ./Dockerfile
       context: .
-    network_mode: host
     command: python producer_main.py
     environment:
       UPLOAD_TOPIC: "test25"
+      KAFKA_HOST: "kafka"
+    networks:
+      - app-tier
 
   consumer:
     build:
       dockerfile: ./Dockerfile
       context: .
-    network_mode: host
     command: python consumer_main.py
     environment:
       UPLOAD_TOPIC: "test25"
+      KAFKA_HOST: "kafka"
+      SPARK_LOCAL: "spark://spark-master:7077"
+    networks:
+      - app-tier
 
 
 
-
-## docker-compose up -d
-## will create a spark on background
-
-
-#  producer:
-#    build:
-#      dockerfile: ./Dockerfile
-#      context: .
-#    command: python producer_main.py
-#    deploy:
-#      replicas: 0
-#    environment:
-#      UPLOAD_TOPIC: "test25"
-#    depends_on:
-#      - "zookeeper"
-#      - "kafka"
-#    networks:
-#      kafkanet:
-#        ipv4_address: 172.25.0.13
-#
-#  consumer:
-#    build:
-#      dockerfile: ./Dockerfile
-#      context: .
-#    deploy:
-#      replicas: 0 # when start docker compose by default consumer dont start , also producer
-#    environment:
-#      UPLOAD_TOPIC: "test25"
-#    command: python consumer_main.py
-#    depends_on:
-#      - "zookeeper"
-#      - "kafka"
-#      - "mongodb"
-#    networks:
-#      kafkanet:
-#        ipv4_address: 172.25.0.15
+networks:
+  app-tier:
+    driver: bridge
