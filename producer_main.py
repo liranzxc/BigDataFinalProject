@@ -13,10 +13,12 @@ if __name__ == "__main__":
 
     # upload songs via producer
     BOOTSTRAP_SERVER = config.kafka_server_address
+    print(BOOTSTRAP_SERVER)
+    print(config.kafka_upload_topic)
     producer = Producer(BOOTSTRAP_SERVER, config.kafka_upload_topic)
-
     batchSize = config.batch_size
     for i in range(0, len(songs_json), batchSize):
+        # TODO in spark
         batch = songs_json[i:i + batchSize]  # the result might be shorter than batchsize at the end
         future = producer.send(batch)
         result = future.get(timeout=config.send_batch_timeout)
