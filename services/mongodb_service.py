@@ -1,7 +1,4 @@
-from models.song_profile import SongProfile
 import pymongo
-from services.config_service import ConfigService
-from bson.json_util import dumps
 
 
 class MongoDbService:

@@ -6,7 +6,6 @@ from nltk.stem import WordNetLemmatizer
 
 
 class NRC:
-
     def __init__(self):
         self.config = ConfigService()
         print("nrc connected to spark")

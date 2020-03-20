@@ -46,16 +46,3 @@ class SongAnalyzerService:
             emotion += word + " "
 
         return SongProfile(song, word_count, histogram_words, emotion)  # emotion
-
-
-if __name__ == "__main__":
-    pass
-    # sc = SparkContext.getOrCreate(SparkConf().setMaster("local[*]"))
-    # lyrics = "Black is the night.34567.., metal@# w$^*e fight Power amps set %#to explode. Energy screams, magic and dreams Satan records the first note. We chime the bell, chaos and hell Metal for maniacs pure. Faster than steel, fortune on wheels Brain haemorrhage is the cure."
-    # song1 = Song("Venom", "Black Metal", lyrics)
-    # nrc = NRC()
-    # analyzer = SongAnalyzerService(sc, nrc)
-    # print(analyzer.analyze(song1))
-
-    # lyrics = ut.clean_sentence(lyrics)
-    # print(lyrics)

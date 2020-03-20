@@ -1,6 +1,5 @@
 from baseClasses.consumer import Consumer
-from models.song import Song
-from nrc.read_nrc_database import NRC
+from services.nrc_service import NRC
 from services.config_service import ConfigService
 from services.mongodb_service import MongoDbService
 from services.song_analyzer_service import SongAnalyzerService
