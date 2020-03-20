@@ -7,9 +7,6 @@ from pyspark import SparkContext, SparkConf
 import nltk
 from models.song_profile import Song
 
-
-#
-# # TODO need to with spark
 def do_work(data):
     song_profiles = []
     print("Consumer received a new batch")
