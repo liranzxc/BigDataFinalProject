@@ -24,25 +24,14 @@ class SongAnalyzerService:
             rdd = self.sc.parallelize([lyrics]).flatMap(lambda line: line.split())
         return rdd
 
-    def __get_emotion_histogram(self, word_histogram_map):
-        emotions_string = r''
-        for word in word_histogram_map:
-            emotion_list = self.nrc.get_emotions_association(word)
-            strength = word_histogram_map.get(word)
-            for emotion in emotion_list:
-                emotions_string += (emotion + " ") * strength
-
-        emotion_histogram = self._create_histogram(self._get_words_rdd(emotions_string, clean=False))
-        return emotion_histogram
+    def _get_emotion_histogram(self, word_histogram_map):
+        most_word = max(word_histogram_map, key=lambda item: item[1])
+        emotion_list = self.nrc.get_emotions_association(most_word[0])
+        return emotion_list
 
     def analyze(self, song: Song, num_emotions=3):
         rdd_lyrics_song = self._get_words_rdd(song.lyrics)
         word_count = self._count_words(rdd_lyrics_song)
         histogram_words = self._create_histogram(rdd_lyrics_song)
-        histogram_emotions = self.__get_emotion_histogram(word_histogram_map=histogram_words)
-        ordered_emotions = sorted(histogram_emotions)
-        emotion = ""
-        for word in ordered_emotions[:num_emotions]:
-            emotion += word + " "
-
-        return SongProfile(song, word_count, histogram_words, emotion)  # emotion
+        emotion_list = self._get_emotion_histogram(word_histogram_map=histogram_words)
+        return SongProfile(song, word_count, histogram_words, emotion_list)  # emotion

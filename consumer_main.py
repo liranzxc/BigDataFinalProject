@@ -7,6 +7,7 @@ from pyspark import SparkContext, SparkConf
 import nltk
 from models.song_profile import Song
 
+
 def do_work(data):
     song_profiles = []
     print("Consumer received a new batch")
@@ -44,7 +45,6 @@ if __name__ == "__main__":
     worker = Consumer(BOOTSTRAP_SERVER, config.kafka_upload_topic)
     worker.startReceive(do_work)
 
-
     # test work
     # songC = Song("liran artices", "lsdlkmsd", "hello world")
     #
@@ -54,6 +54,3 @@ if __name__ == "__main__":
     # x = mongodb_service.upload_song_profiles(song_profiles)
     # # print list of the _id values of the inserted documents:
     # print(x.inserted_ids)
-
-
-

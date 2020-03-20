@@ -1,4 +1,4 @@
-from config_service import ConfigService
+from services.config_service import ConfigService
 from nltk.stem import WordNetLemmatizer
 import pandas as pd
 
