@@ -25,7 +25,10 @@ class MongoDbService:
     def get_all_records(self, page=-1, size=-1):
         db = self.client[self.db_name]
         collection = db[self.db_result]
-        return collection.find().skip(page * size).limit(size)
+        if page != -1 and size != -1:
+            return collection.find().skip(page * size).limit(size)
+        else:
+            return collection.find()
 
     def get_counts(self):
         db = self.client[self.db_name]
