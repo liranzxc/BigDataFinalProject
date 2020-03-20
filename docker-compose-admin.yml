@@ -1,6 +1,7 @@
 version: '3.7'
 services:
   producer:
+    container_name: producer
     build:
       dockerfile: ./Dockerfile
       context: .
@@ -13,6 +14,7 @@ services:
       - app-tier
 
   consumer:
+    container_name: consumer
     build:
       dockerfile: ./Dockerfile
       context: .
