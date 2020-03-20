@@ -5,8 +5,8 @@ from services.config_service import ConfigService
 from services.mongodb_service import MongoDbService
 from services.song_analyzer_service import SongAnalyzerService
 from pyspark import SparkContext, SparkConf
-import json
 import nltk
+from models.song_profile import Song
 
 
 #
@@ -24,7 +24,10 @@ def do_work(data):
 
     # save song_profiles on db mongo
     songs_profile_jsons_array = list(map(lambda sp: sp.to_mongodb_document_format(), song_profiles))
-    print(mongodb_service.upload_song_profiles(songs_profile_jsons_array))
+    x = mongodb_service.upload_song_profiles(songs_profile_jsons_array)
+
+    # print list of the _id values of the inserted documents:
+    print(x.inserted_ids)
 
 
 if __name__ == "__main__":
@@ -36,7 +39,6 @@ if __name__ == "__main__":
     mongodb_service = MongoDbService(config)
     print("here after config")
 
-
     print("after sc started")
     sc = SparkContext.getOrCreate(SparkConf().setMaster(config.spark_local))
     song_analyzer = SongAnalyzerService(sc, NRC())
@@ -45,3 +47,17 @@ if __name__ == "__main__":
     BOOTSTRAP_SERVER = config.kafka_server_address
     worker = Consumer(BOOTSTRAP_SERVER, config.kafka_upload_topic)
     worker.startReceive(do_work)
+
+
+    # test work
+    # songC = Song("liran artices", "lsdlkmsd", "hello world")
+    #
+    # song = SongProfile(song=songC, number_of_words=2424, histogram={"hello": 1}, emotion="hello")
+    # song_profiles = [song.to_mongodb_document_format()]
+    #
+    # x = mongodb_service.upload_song_profiles(song_profiles)
+    # # print list of the _id values of the inserted documents:
+    # print(x.inserted_ids)
+
+
+
