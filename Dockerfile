@@ -1,6 +1,7 @@
-FROM python:3.7-alpine3.10
+FROM python:3.7
 
-RUN apk add --update alpine-sdk
+RUN apt-get update
+RUN apt-get install build-essential
 WORKDIR /opt/app
 
 ADD ./requirements.txt ./requirements.txt
