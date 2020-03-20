@@ -1,4 +1,4 @@
-FROM python:3.5
+FROM python:3.6.3
 
 WORKDIR /opt/app
 
@@ -7,6 +7,6 @@ RUN pip install --upgrade pip
 RUN pip install -r ./requirements.txt
 
 
-ENV PYSPARK_PYTHON python3.5
-ENV PYTHON_DRIVER_SPARK python3.5
+ENV PYSPARK_PYTHON python3
+ENV PYTHON_DRIVER_SPARK python3
 COPY . /opt/app

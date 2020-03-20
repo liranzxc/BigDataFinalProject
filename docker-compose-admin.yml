@@ -5,7 +5,7 @@ services:
     build:
       dockerfile: ./Dockerfile
       context: .
-    command: python producer_main.py
+    command: python3 producer_main.py
     environment:
       UPLOAD_TOPIC: "test25"
       KAFKA_HOST: "kafka"
