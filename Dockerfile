@@ -31,6 +31,7 @@ RUN python3.7 -m pip install -r ./requirements.txt
 
 RUN apt-get install zip -y
 
+ENV DOCKER True
 ENV PYSPARK_PYTHON python3.7
 COPY . /opt/app
 

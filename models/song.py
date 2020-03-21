@@ -6,6 +6,4 @@ class Song:
 
     @staticmethod
     def from_json_to_song(data):
-        from services.config_service import ConfigService
-        config = ConfigService()
-        return Song(data[config.song_json_artist], data[config.song_json_name], data[config.song_json_lyrics])
+        return Song(data['artist'], data['song_name'], data['text'])

@@ -8,7 +8,7 @@ import nltk
 from models.song_profile import Song
 from glob import glob
 import sys
-
+import os
 
 def do_work(data):
     song_profiles = []
@@ -41,7 +41,8 @@ if __name__ == "__main__":
     print(config.spark_local)
     sc = SparkContext.getOrCreate(SparkConf().setMaster(config.spark_local))
 
-    sc.addPyFile("./all.zip")
+    if os.getenv("DOCKER",False):
+        sc.addPyFile("./all.zip")
 
     sys.path.insert(0, SparkFiles.getRootDirectory())
 
