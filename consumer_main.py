@@ -38,9 +38,11 @@ if __name__ == "__main__":
     config = ConfigService()
     mongodb_service = MongoDbService(config)
     print("here after config")
-
+    MAX_MEMORY = "5g"
     print(config.spark_local)
-    sc = SparkContext.getOrCreate(SparkConf().setMaster(config.spark_local))
+    sc = SparkContext \
+        .getOrCreate(SparkConf().set("spark.executor.memory", MAX_MEMORY) \
+                     .set("spark.driver.memory", MAX_MEMORY).setMaster(config.spark_local))
 
     if os.getenv("DOCKER", False):
         sc.addPyFile("./all.zip")
