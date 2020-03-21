@@ -12,7 +12,7 @@ class Consumer:
             group_id=None)
         self.topic_receive = topic_receive
 
-    def startReceive(self, method_messages):
+    def start_receive(self, method_messages):
         print("start receive from topic '{}'".format(self.topic_receive))
         for message in self.consumer:
             # message value and key are raw bytes -- decode if necessary!

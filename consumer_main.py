@@ -52,8 +52,7 @@ if __name__ == "__main__":
     num_emotions = config.number_emotions
     BOOTSTRAP_SERVER = config.kafka_server_address
     worker = Consumer(BOOTSTRAP_SERVER, config.kafka_upload_topic)
-    worker.startReceive(do_work)
-
+    worker.start_receive(do_work)
     # test work
     # songC = Song("liran artices", "lsdlkmsd", "hello world")
     #
