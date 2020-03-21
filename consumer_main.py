@@ -3,9 +3,11 @@ from services.nrc_service import NRC
 from services.config_service import ConfigService
 from services.mongodb_service import MongoDbService
 from services.song_analyzer_service import SongAnalyzerService
-from pyspark import SparkContext, SparkConf
+from pyspark import SparkContext, SparkConf, SparkFiles
 import nltk
 from models.song_profile import Song
+from glob import glob
+import sys
 
 
 def do_work(data):
@@ -38,6 +40,12 @@ if __name__ == "__main__":
 
     print(config.spark_local)
     sc = SparkContext.getOrCreate(SparkConf().setMaster(config.spark_local))
+
+    sc.addPyFile("./services.zip")
+    sc.addPyFile("./models.zip")
+
+    sys.path.insert(0, SparkFiles.getRootDirectory())
+
     print(sc.version)
     song_analyzer = SongAnalyzerService(sc, NRC(config))
     print("after sc started")
