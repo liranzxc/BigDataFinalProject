@@ -10,6 +10,7 @@ from glob import glob
 import sys
 import os
 
+
 def do_work(data):
     song_profiles = []
     print("Consumer received a new batch")
@@ -41,7 +42,7 @@ if __name__ == "__main__":
     print(config.spark_local)
     sc = SparkContext.getOrCreate(SparkConf().setMaster(config.spark_local))
 
-    if os.getenv("DOCKER",False):
+    if os.getenv("DOCKER", False):
         sc.addPyFile("./all.zip")
 
     sys.path.insert(0, SparkFiles.getRootDirectory())

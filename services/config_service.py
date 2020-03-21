@@ -6,7 +6,7 @@ class ConfigService:
     def __init__(self):
         self.kafka_host = os.getenv("KAFKA_HOST", "localhost")
         self.kafka_port = os.getenv("KAFKA_PORT", "9092")
-        self.kafka_upload_topic = os.getenv("UPLOAD_TOPIC", "test8")
+        self.kafka_upload_topic = os.getenv("UPLOAD_TOPIC", "test26")
         self.mongodb_host = os.getenv("MONGODB_HOST", "localhost")
         self.mongodb_port = os.getenv("MONGODB_PORT", "27017")
         self.mongodb_db_name = os.getenv("MONGODB_DB_NAME", "songs")
@@ -21,12 +21,12 @@ class ConfigService:
         self.emolex_delimiter = "\t"
         self.number_emotions = os.getenv("NUMBER_OF_EMOTIONS", 4)
         self.batch_size = os.getenv("BATCH_SIZE", 5)
-        self.send_batch_timeout = 0.5
+        self.send_batch_timeout = 40
         self.spark_local = os.getenv("SPARK_LOCAL", "local[*]")
         self.spark_emolex_format = "com.databricks.spark.csv"
-        self.song_json_artist = 'artist'
-        self.song_json_lyrics = "text"
-        self.song_json_name = "song_name"
+        # self.song_json_artist = 'artist'
+        # self.song_json_lyrics = "text"
+        # self.song_json_name = "song_name"
 
         self.emotion_lex_path = os.getenv("NRC_EMOTION_LEX", "datasets/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt")
 

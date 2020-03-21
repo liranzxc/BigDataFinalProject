@@ -52,8 +52,12 @@ class SongAnalyzerService:
 
     def analyze(self, song: Song):
         rdd_lyrics_song = self._get_words_rdd(song.lyrics)
+        print("111111")
         word_count = self._count_words(rdd_lyrics_song)
+        print("222222")
         histogram_words = self._create_histogram(rdd_lyrics_song)
+        print("3333333")
         emotion_list = self._get_emotion_histogram(word_histogram_map=histogram_words)
+        print("4444444")
         return SongProfile(song, word_count, histogram_words, emotion_list)  # emotion
 
