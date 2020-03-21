@@ -14,7 +14,6 @@ services:
       - app-tier
 
   consumer:
-    container_name: consumer
     build:
       dockerfile: ./Dockerfile
       context: .
