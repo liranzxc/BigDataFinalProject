@@ -15,7 +15,7 @@ def do_work(data):
         # analyzer song and get result
         print("Consumer working on song")
         song = Song.from_json_to_song(song_json)
-        analyze = song_analyzer.analyze(song, num_emotions=num_emotions)
+        analyze = song_analyzer.analyze(song)
         print(analyze)
         song_profiles.append(analyze)
 
@@ -39,7 +39,7 @@ if __name__ == "__main__":
     print(config.spark_local)
     sc = SparkContext.getOrCreate(SparkConf().setMaster(config.spark_local))
     print(sc.version)
-    song_analyzer = SongAnalyzerService(sc, NRC())
+    song_analyzer = SongAnalyzerService(sc, NRC(config))
     print("after sc started")
 
     num_emotions = config.number_emotions

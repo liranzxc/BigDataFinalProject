@@ -4,8 +4,8 @@ import pandas as pd
 
 
 class NRC:
-    def __init__(self):
-        self.config = ConfigService()
+    def __init__(self, config):
+        self.config = config
         self.lemmatizer = WordNetLemmatizer()
         self.df = pd.read_csv(self.config.emotion_lex_path, names=["word", "emotion", "association"],
                               skiprows=45, sep='\t')
