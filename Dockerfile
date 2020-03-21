@@ -6,7 +6,8 @@ RUN apt-get update
 RUN apt-get install openjdk-7-jdk -y
 RUN apt-get install build-essential -y
 
-RUN echo $JAVA_HOME
+
+RUN echo JAVA_HOME
 
 ADD ./requirements.txt ./requirements.txt
 RUN pip install --upgrade pip

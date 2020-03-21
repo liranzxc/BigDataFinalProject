@@ -1,5 +1,3 @@
-import os
-import findspark
 from pyspark import SparkConf
 from pyspark import SparkContext
 

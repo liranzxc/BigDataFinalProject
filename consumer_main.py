@@ -36,6 +36,7 @@ if __name__ == "__main__":
     mongodb_service = MongoDbService(config)
     print("here after config")
 
+    print(config.spark_local)
     sc = SparkContext.getOrCreate(SparkConf().setMaster(config.spark_local))
     print(sc.version)
     song_analyzer = SongAnalyzerService(sc, NRC())
