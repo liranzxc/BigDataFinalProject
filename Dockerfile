@@ -26,5 +26,5 @@ ADD ./requirements.txt ./requirements.txt
 RUN pip3 install -r ./requirements.txt
 
 
-ENV PYSPARK_PYTHON python3.6
+ENV PYSPARK_PYTHON /user/bin/python3.6
 COPY . /opt/app
