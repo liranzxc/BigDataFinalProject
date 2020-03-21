@@ -46,18 +46,13 @@ class SongAnalyzerService:
         return rdd
 
     def _get_emotion_histogram(self, word_histogram_map):
-        most_word = max(word_histogram_map, key=lambda item: item[1])
+        most_word = max(word_histogram_map.items(), key=lambda item: item[1])
         emotion_list = self.nrc.get_emotions_association(most_word[0])
         return emotion_list
 
     def analyze(self, song: Song):
         rdd_lyrics_song = self._get_words_rdd(song.lyrics)
-        print("111111")
         word_count = self._count_words(rdd_lyrics_song)
-        print("222222")
         histogram_words = self._create_histogram(rdd_lyrics_song)
-        print("3333333")
         emotion_list = self._get_emotion_histogram(word_histogram_map=histogram_words)
-        print("4444444")
         return SongProfile(song, word_count, histogram_words, emotion_list)  # emotion
-
