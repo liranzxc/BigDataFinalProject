@@ -1,4 +1,4 @@
-from utils.utilities import Utilities as ut
+# from utilsWords.utilities import Utilities as ut
 from models.song import Song
 from models.song_profile import SongProfile
 
@@ -17,9 +17,10 @@ class SongAnalyzerService:
 
     #   Use clean=True if cleaning is needed
     #   Otherwise, the function assumes the lines are already clean, this is faster to compute
-    def _get_words_rdd(self, lyrics: str, clean=True):
+    def _get_words_rdd(self, lyrics: str, clean=False):
         if clean:
-            rdd = self.sc.parallelize([lyrics]).flatMap(lambda line: ut.clean_sentence(line))
+            pass
+          #  rdd = self.sc.parallelize([lyrics]).flatMap(lambda line: ut.clean_sentence(line))
         else:
             rdd = self.sc.parallelize([lyrics]).flatMap(lambda line: line.split())
         return rdd
