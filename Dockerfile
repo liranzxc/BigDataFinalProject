@@ -29,8 +29,11 @@ RUN apt install -y python3-pip
 ADD ./requirements.txt ./requirements.txt
 RUN python3.7 -m pip install -r ./requirements.txt
 
+RUN apt-get install zip -y
 
 ENV PYSPARK_PYTHON python3.7
 COPY . /opt/app
+
+RUN zip -r all.zip .
 
 RUN ls -l

@@ -41,8 +41,7 @@ if __name__ == "__main__":
     print(config.spark_local)
     sc = SparkContext.getOrCreate(SparkConf().setMaster(config.spark_local))
 
-    sc.addPyFile("./services.zip")
-    sc.addPyFile("./models.zip")
+    sc.addPyFile("./all.zip")
 
     sys.path.insert(0, SparkFiles.getRootDirectory())
 
