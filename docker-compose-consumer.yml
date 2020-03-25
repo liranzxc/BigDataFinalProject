@@ -1,18 +1,5 @@
 version: '3.7'
 services:
-  producer:
-    container_name: producer
-    build:
-      dockerfile: ./Dockerfile
-      context: .
-    command: python3.7 producer_main.py
-    environment:
-      UPLOAD_TOPIC: "test26"
-      KAFKA_HOST: "kafka"
-      BATCH_SIZE : 5
-    networks:
-      - app-tier
-
   consumer:
     build:
       dockerfile: ./Dockerfile
@@ -23,7 +10,7 @@ services:
       KAFKA_HOST: "kafka"
       SPARK_LOCAL: "spark://spark-master:7077"
       MONGODB_HOST : "mongodb"
-      BATCH_SIZE : 5
+      BATCH_SIZE : 200
     networks:
       - app-tier
 

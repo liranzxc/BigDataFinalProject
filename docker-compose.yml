@@ -9,7 +9,7 @@ services:
       - INIT_DAEMON_STEP=setup_spark
     networks:
       - app-tier
-  spark-worker-1:
+  spark-worker:
     image: bde2020/spark-worker:2.4.4-hadoop2.7
     depends_on:
       - spark-master
