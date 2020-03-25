@@ -1,6 +1,8 @@
 import concurrent
 from concurrent.futures import ThreadPoolExecutor
 
+import numpy as np
+
 from baseClasses.consumer import Consumer
 from services.nrc_service import NRC
 from services.config_service import ConfigService
@@ -38,10 +40,11 @@ def customer_main_thread(consumerNumber):
     config = ConfigService()
     mongodb_service = MongoDbService(config)
 
-    MAX_MEMORY = "5g"
+    MAX_MEMORY = "1g"
     sc = SparkContext \
         .getOrCreate(SparkConf().set("spark.executor.memory", MAX_MEMORY)
                      .set("spark.driver.memory", MAX_MEMORY)
+                     .set("spark.cores.max", 1)
                      .set("spark.scheduler.allocation.file", "./fairscheduler.xml")
                      .setMaster(config.spark_local))
     if os.getenv("DOCKER", False):
@@ -54,14 +57,15 @@ def customer_main_thread(consumerNumber):
     worker = Consumer(BOOTSTRAP_SERVER, config.kafka_upload_topic)
     worker.start_receive(do_work, extraData={"song_analyzer": song_analyzer,
                                              "mongodb_service": mongodb_service,
-                                             "consumerNumber" : consumerNumber})
+                                             "consumerNumber": consumerNumber})
 
 
 if __name__ == "__main__":
     print('downloading wordnet...')
     nltk.download('wordnet')
     print('finish download wordnet.')
-    NUMBER_OF_CONSUMER = [0,1,2]
+    NUMBER_OF_CONSUMER = 16
+    jobs = np.arange(0, NUMBER_OF_CONSUMER+1, 1)
     with concurrent.futures.ProcessPoolExecutor() as executor:
-        for number in executor.map(customer_main_thread, NUMBER_OF_CONSUMER):
+        for number in executor.map(customer_main_thread, jobs):
             print("consumer % finish".format(number))
