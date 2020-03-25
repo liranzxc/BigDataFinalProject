@@ -3,6 +3,6 @@
   <pool name="fair_pool">
     <schedulingMode>FAIR</schedulingMode>
     <weight>1</weight>
-    <minShare>2</minShare>
+    <minShare>1</minShare>
   </pool>
 </allocations>
