@@ -25,11 +25,10 @@ export class HomeComponent implements OnInit {
 
   constructor() {
     // Create 100 users
-    const songProfiles = Array.from({ length: 2000 }, (_, k) => createNewSongProfile(k + 1));
+    const songProfiles = Array.from({ length: 5 }, (_, k) => createNewSongProfile(k + 1));
 
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(songProfiles);
-
   }
 
   ngOnInit() {
@@ -84,10 +83,15 @@ function createNewSongProfile(id: number): SongProfile {
 
   const song_name = SONG_NAMES[Math.round(Math.random() * (SONG_NAMES.length - 1))];
 
+  var lyrics : string = ''
+  for (let i = 0; i < 100; i++) {
+    lyrics = lyrics + SONG_NAMES[Math.round(Math.random() * (SONG_NAMES.length - 1))] + ' ';
+  }
+
   return {
     artist: artist,
     name: song_name,
-    lyrics: 'djhf sdfisad sdlfksd',
+    lyrics: lyrics,
     size: Math.round(Math.random() * 1000),
     emotion: emotion,
     histogram: {
