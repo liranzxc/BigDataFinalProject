@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {SettingComponent} from "./settings/settings.component";
-
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
-  {path : "setting",component:SettingComponent}
+  {path : "setting",component:SettingComponent},
+  {path : "home",component:HomeComponent}
+  
 ];
 
 @NgModule({
