@@ -55,6 +55,12 @@ export interface SongProfile {
   emotion: string;
   histogram: object;
 }
+
+export interface Song {
+  artist: string;
+  name: string;
+  lyrics: string;
+}
 /** Constants used to fill up our data base. */
 const SONG_NAMES: string[] = [
   'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
