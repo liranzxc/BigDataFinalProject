@@ -10,12 +10,19 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatIconModule} from "@angular/material/icon";
 import {MatListModule} from "@angular/material/list";
 import { SettingComponent } from './setting/setting.component';
-
+import { HomeComponent } from './components/home/home.component';
+import {MatSelectModule} from '@angular/material/select';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material';
 @NgModule({
   declarations: [
     AppComponent,
     TemplateBaseComponent,
-    SettingComponent
+    SettingComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +31,13 @@ import { SettingComponent } from './setting/setting.component';
     MatToolbarModule,
     MatMenuModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
