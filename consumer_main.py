@@ -36,15 +36,15 @@ def do_work(data, extraData=None):
     print(x.inserted_ids)
 
 
-def customer_main_thread(consumerNumber):
+def consumer_main_thread(consumerNumber):
     config = ConfigService()
     mongodb_service = MongoDbService(config)
 
-    MAX_MEMORY = "1g"
+    MAX_MEMORY = str(os.getenv("MAX_MEMORY", "1g"))
     sc = SparkContext \
         .getOrCreate(SparkConf().set("spark.executor.memory", MAX_MEMORY)
                      .set("spark.driver.memory", MAX_MEMORY)
-                     .set("spark.cores.max", 1)
+                     .set("spark.cores.max", int(os.getenv("MAX_CORES", 1)))
                      .set("spark.scheduler.allocation.file", "./fairscheduler.xml")
                      .setMaster(config.spark_local))
     if os.getenv("DOCKER", False):
@@ -64,8 +64,8 @@ if __name__ == "__main__":
     print('downloading wordnet...')
     nltk.download('wordnet')
     print('finish download wordnet.')
-    NUMBER_OF_CONSUMER = 16
-    jobs = np.arange(0, NUMBER_OF_CONSUMER+1, 1)
+    NUMBER_OF_CONSUMER = int(os.getenv("NUMBER_OF_CONSUMER", 1))
+    jobs = np.arange(0, NUMBER_OF_CONSUMER, 1)
     with concurrent.futures.ProcessPoolExecutor() as executor:
-        for number in executor.map(customer_main_thread, jobs):
+        for number in executor.map(consumer_main_thread, jobs):
             print("consumer % finish".format(number))

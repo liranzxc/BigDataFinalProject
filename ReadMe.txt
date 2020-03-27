@@ -65,3 +65,12 @@ Removing spark-worker-1 ... done
 Removing spark-master   ... done
 Removing network bigdata_default
 (base) lirannh@192:~/Desktop/BigData$
+
+
+
+
+## scale
+
+
+docker-compose up -d --scale spark-worker=2
+docker-compose --file docker-compose-producer.yml up

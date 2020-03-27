@@ -11,6 +11,9 @@ services:
       SPARK_LOCAL: "spark://spark-master:7077"
       MONGODB_HOST : "mongodb"
       BATCH_SIZE : 200
+      NUMBER_OF_CONSUMER: "${NUMBER_OF_CONSUMER}"
+      MAX_MEMORY: "${MAX_MEMORY}"
+      MAX_CORES : "${MAX_CORES}"
     networks:
       - app-tier
 

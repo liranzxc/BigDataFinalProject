@@ -17,6 +17,11 @@ def uploadProducerDocker():
     print(p)
 
 
+def updateConsumer():
+    p = subprocess.call("docker-compose up producer -d", shell=True)
+    print(p)
+
+
 # delete db data
 @app.route("/mongodb", methods=["DELETE"])
 def deleteAllMongodb():
