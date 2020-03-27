@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {TemplateBaseComponent} from "./template-base/template-base.component";
+import {SettingComponent} from "./setting/setting.component";
 
 
 const routes: Routes = [
-  {path : "statistic",component:TemplateBaseComponent}
+  {path : "setting",component:SettingComponent}
 ];
 
 @NgModule({
