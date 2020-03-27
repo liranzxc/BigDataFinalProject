@@ -18,6 +18,8 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatButtonModule} from '@angular/material/button';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
