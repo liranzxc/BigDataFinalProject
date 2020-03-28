@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {SongProfile} from '../../model/song-profile'
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { SongProfile } from '../../model/song-profile'
 
 @Component({
   selector: 'app-home',
@@ -11,8 +11,8 @@ import {SongProfile} from '../../model/song-profile'
   styleUrls: ['./home.component.sass'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ]
@@ -73,7 +73,7 @@ function createNewSongProfile(id: number): SongProfile {
 
   const song_name = SONG_NAMES[Math.round(Math.random() * (SONG_NAMES.length - 1))];
 
-  var lyrics : string = ''
+  var lyrics: string = ''
   for (let i = 0; i < 1000; i++) {
     lyrics = lyrics + SONG_NAMES[Math.round(Math.random() * (SONG_NAMES.length - 1))] + ' ';
   }

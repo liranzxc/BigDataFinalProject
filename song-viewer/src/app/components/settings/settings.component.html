@@ -1,42 +1,47 @@
 <app-template-base></app-template-base>
-
-
-    <div layout="column" flex class="settings">
-        <div flex>
-            <mat-form-field>
-                <mat-label>Define number of consumers</mat-label>
-                <textarea matInput placeholder="Write number of consumers"></textarea>
-            </mat-form-field>
-        </div>
-        <div flex>
-            <button mat-raised-button color="primary">Accept number of consumers</button>
-        </div>
+<div class="main-content-container">
+    <div class="menu-container">
+        <app-menu></app-menu>
     </div>
+    <div class="content-container">
+        <div layout="column" flex class="settings">
+            <div flex>
+                <mat-form-field>
+                    <mat-label>Define number of consumers</mat-label>
+                    <textarea matInput placeholder="Write number of consumers"></textarea>
+                </mat-form-field>
+            </div>
+            <div flex>
+                <button mat-raised-button color="primary">Accept number of consumers</button>
+            </div>
+        </div>
 
-    <div layout="column" flex>
-        <div flex>
-            <mat-form-field>
-                <mat-label>Define number of cores</mat-label>
-                <textarea matInput placeholder="Write number of cores"></textarea>
-            </mat-form-field>
+        <div layout="column" flex>
+            <div flex>
+                <mat-form-field>
+                    <mat-label>Define number of cores</mat-label>
+                    <textarea matInput placeholder="Write number of cores"></textarea>
+                </mat-form-field>
+            </div>
+            <div flex>
+                <button mat-raised-button color="primary">Accept number of cores</button>
+            </div>
         </div>
-        <div flex>
-            <button mat-raised-button color="primary">Accept number of cores</button>
+
+        <div layout="column" flex>
+            <div flex>
+                <mat-form-field>
+                    <mat-label>Define memory per consumer</mat-label>
+                    <textarea matInput placeholder="Write memory per consumer"></textarea>
+                </mat-form-field>
+            </div>
+            <div flex>
+                <button mat-raised-button color="primary">Accept memory per consumer</button>
+            </div>
         </div>
+
+        <mat-slide-toggle>Turn power on/off</mat-slide-toggle>
+        <mat-slide-toggle>Consumers turn on/off</mat-slide-toggle>
+        <mat-slide-toggle>Producers turn on/off</mat-slide-toggle>
     </div>
-
-    <div layout="column" flex>
-        <div flex>
-            <mat-form-field>
-                <mat-label>Define memory per consumer</mat-label>
-                <textarea matInput placeholder="Write memory per consumer"></textarea>
-            </mat-form-field>
-        </div>
-        <div flex>
-            <button mat-raised-button color="primary">Accept memory per consumer</button>
-        </div>
-    </div>
-
-<mat-slide-toggle>Turn power on/off</mat-slide-toggle>
-<mat-slide-toggle>Consumers turn on/off</mat-slide-toggle>
-<mat-slide-toggle>Producers turn on/off</mat-slide-toggle>
+</div>

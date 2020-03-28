@@ -19,6 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
+import { MenuComponent } from './components/menu/menu.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { MatButtonModule } from '@angular/material/button';
     AppComponent,
     TemplateBaseComponent,
     SettingComponent,
-    HomeComponent
+    HomeComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

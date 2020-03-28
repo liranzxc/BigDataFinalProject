@@ -8,16 +8,16 @@ table
 td, th
   width: 25%
 
-  tr
-  &.example-detail-row
-    height: 0
+tr
+.example-detail-row
+  height: 0
 
-  &.example-element-row:not(.example-expanded-row)
-    &:hover
-      background: whitesmoke
+.example-element-row
+  :hover
+    background: whitesmoke
 
-    &:active
-      background: #efefef
+  :active
+    background: #efefef
 
 .example-element-row td
   border-bottom-width: 0
@@ -41,4 +41,15 @@ td, th
   font-size: 20px
   line-height: normal
   margin: 20px
-  
+
+.main-content-container
+  display: flex
+
+.menu-container
+  width: 10%
+  margin: 15px
+
+.content-container
+  margin: 15px
+  width: 90%
+  flex-grow: 1
