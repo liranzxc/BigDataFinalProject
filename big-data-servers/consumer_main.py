@@ -34,8 +34,8 @@ def do_work(data, extraData=None):
 
     # save song_profiles on db mongo
     songs_profiles = songs_rdd.collect()
-    songs_profile_jsons_array = list(map(lambda sp: sp.to_mongodb_document_format(), song_profiles))
-    x = extraData["mongodb_service"].upload_song_profiles(songs_profile_jsons_array)
+    print(songs_profiles)
+    #x = extraData["mongodb_service"].upload_song_profiles(songs_profile_jsons_array)
 
     # print list of the _id values of the inserted documents:
     print(x.inserted_ids)

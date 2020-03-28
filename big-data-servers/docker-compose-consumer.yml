@@ -10,7 +10,7 @@ services:
       KAFKA_HOST: "kafka"
       SPARK_LOCAL: "spark://spark-master:7077"
       MONGODB_HOST : "mongodb"
-      BATCH_SIZE : 200
+      BATCH_SIZE : 3
       NUMBER_OF_CONSUMER: "${NUMBER_OF_CONSUMER}"
       MAX_MEMORY: "${MAX_MEMORY}"
       MAX_CORES : "${MAX_CORES}"

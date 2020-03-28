@@ -35,28 +35,24 @@ class SongAnalyzerService:
             word_histogram[word] = word_database.count(word)
         return word_histogram
 
-    #   Use clean=True if cleaning is needed
-    #   Otherwise, the function assumes the lines are already clean, this is faster to compute
-    def _get_words(self, lyrics: str, clean=True):
-        lyrics = lyrics.split("\n")
+    def _get_words(self, lyrics: str):
+        lyrics = lyrics.split("\r\n")
         words = []
         for line in lyrics:
-            if clean:
-                words.append(clean_sentence(line))
-            else:
-                words.append(line.split())
+            words.append(clean_sentence(line))
         return words
 
-    def _get_emotion_histogram(self, word_histogram_map):
+    def _get_emotion_histogram(self, map):
         emotion = []
-        most_word = max(word_histogram_map.items(), key=lambda item: item[1])
-        while
-        emotion = self.nrc.get_emotions_association(most_word[0])
+        for w in sorted(map, key=map.get, reverse=True):
+            emotion.append(self.nrc.get_emotions_association(w))
+            if len(emotion):
+                break
         return emotion
 
     def analyze(self, song: Song):
         word_database = self._get_words(song.lyrics)
         word_count = len(set(word_database))
         histogram_words = self._create_histogram(word_database)
-        emotion = self._get_emotion_histogram(word_histogram_map=histogram_words)
-        return SongProfile(song, word_count, histogram_words, emotion)  # emotion
+        emotion = self._get_emotion_histogram(map=histogram_words)
+        return SongProfile(song, word_count, histogram_words, emotion)
