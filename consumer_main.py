@@ -17,18 +17,23 @@ import threading
 
 
 def do_work(data, extraData=None):
-    song_profiles = []
-    print("Consumer received a new batch")
-    for song_json in data:
-        # analyzer song and get result
-        print("Consumer working on song")
-        song = Song.from_json_to_song(song_json)
-        analyze = extraData["song_analyzer"].analyze(song)
-        print(extraData["consumerNumber"])
-        print(analyze)
-        song_profiles.append(analyze)
+    sc = extraData["spark_context"]
+    analyzer = extraData["song_analyzer"]
+    print("Consumer {} received a new batch".format(extraData["consumerNumber"]))
+    songs_rdd = sc.parallelize(data).map(lambda song_json: Song.from_json_to_song(song_json))\
+        .map(lambda song: analyzer.analyze(song).to_mongodb_document_format())
+
+    # for song_json in data:
+    #     # analyzer song and get result
+    #     print("Consumer working on song")
+    #     song = Song.from_json_to_song(song_json)
+    #     analyze = extraData["song_analyzer"].analyze(song)
+    #
+    #     # print(analyze)
+    #     song_profiles.append(analyze)
 
     # save song_profiles on db mongo
+    songs_profiles = songs_rdd.collect()
     songs_profile_jsons_array = list(map(lambda sp: sp.to_mongodb_document_format(), song_profiles))
     x = extraData["mongodb_service"].upload_song_profiles(songs_profile_jsons_array)
 
@@ -50,14 +55,15 @@ def consumer_main_thread(consumerNumber):
     if os.getenv("DOCKER", False):
         sc.addPyFile("./all.zip")
     sys.path.insert(0, SparkFiles.getRootDirectory())
-    song_analyzer = SongAnalyzerService(sc, NRC(config))
+    song_analyzer = SongAnalyzerService(NRC(config))
 
     # num_emotions = config.number_emotions
     BOOTSTRAP_SERVER = config.kafka_server_address
     worker = Consumer(BOOTSTRAP_SERVER, config.kafka_upload_topic)
     worker.start_receive(do_work, extraData={"song_analyzer": song_analyzer,
                                              "mongodb_service": mongodb_service,
-                                             "consumerNumber": consumerNumber})
+                                             "consumerNumber": consumerNumber,
+                                             "spark_context": sc})
 
 
 if __name__ == "__main__":
