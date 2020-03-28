@@ -1,14 +1,16 @@
 from models.song import Song
-import uuid
 import json
 
 
 class SongProfile:
-    def __init__(self, song: Song, number_of_words: int, histogram, emotion: str):
+    def __init__(self, song: Song, number_of_words: int, histogram, emotion: list):
         self.song = song
         self.number_of_words = number_of_words
         self.histogram = histogram
-        self.emotion = emotion
+        if emotion:
+            self.emotion = emotion[0]
+        else:
+            self.emotion = ""
 
     def to_mongodb_document_format(self):
         return {"number_of_words": self.number_of_words, "histogram": self.histogram,

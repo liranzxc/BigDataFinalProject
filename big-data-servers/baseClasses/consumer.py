@@ -12,7 +12,7 @@ class Consumer:
             group_id=None)
         self.topic_receive = topic_receive
 
-    def start_receive(self, method_messages,extraData=None):
+    def start_receive(self, method_messages, extra_data=None):
         print("start receive from topic {}".format(self.topic_receive))
         for message in self.consumer:
             # message value and key are raw bytes -- decode if necessary!
@@ -20,7 +20,7 @@ class Consumer:
             try:
                 message_json = message.value.decode('utf-8')
                 message_json = json.loads(message_json)
-                method_messages(message_json, extraData=extraData)
+                method_messages(message_json, extra_data=extra_data)
             except Exception as e:
                 print(e)
                 pass

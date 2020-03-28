@@ -1,5 +1,6 @@
-from nltk.stem import WordNetLemmatizer
 import pandas as pd
+from nltk.stem import WordNetLemmatizer
+
 
 
 class NRC:

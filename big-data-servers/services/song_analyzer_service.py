@@ -2,6 +2,7 @@ from models.song import Song
 from models.song_profile import SongProfile
 
 
+
 def clean_word(word, allow_numbers=False):
     cleaned = ""
     numbers = '0123456789'
@@ -42,9 +43,9 @@ class SongAnalyzerService:
             words.append(clean_sentence(line))
         return words
 
-    def _get_emotion_histogram(self, map):
+    def _get_emotion_histogram(self, histogram):
         emotion = []
-        for w in sorted(map, key=map.get, reverse=True):
+        for w in sorted(histogram, key=histogram.get, reverse=True):
             emotion.append(self.nrc.get_emotions_association(w))
             if len(emotion):
                 break
@@ -54,5 +55,11 @@ class SongAnalyzerService:
         word_database = self._get_words(song.lyrics)
         word_count = len(set(word_database))
         histogram_words = self._create_histogram(word_database)
-        emotion = self._get_emotion_histogram(map=histogram_words)
+        emotion = self._get_emotion_histogram(histogram=histogram_words)
         return SongProfile(song, word_count, histogram_words, emotion)
+
+
+
+
+
+
