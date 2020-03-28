@@ -3,6 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {SongProfile} from '../../model/song-profile'
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -45,21 +47,9 @@ export class HomeComponent implements OnInit {
     }
   }
 }
-export interface SongProfile {
-  artist: string;
-  name: string;
-  lyrics: string;
 
-  size: number;
-  emotion: string;
-  histogram: object;
-}
 
-export interface Song {
-  artist: string;
-  name: string;
-  lyrics: string;
-}
+
 /** Constants used to fill up our data base. */
 const SONG_NAMES: string[] = [
   'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
@@ -84,7 +74,7 @@ function createNewSongProfile(id: number): SongProfile {
   const song_name = SONG_NAMES[Math.round(Math.random() * (SONG_NAMES.length - 1))];
 
   var lyrics : string = ''
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 1000; i++) {
     lyrics = lyrics + SONG_NAMES[Math.round(Math.random() * (SONG_NAMES.length - 1))] + ' ';
   }
 
