@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { SongProfile } from '../../model/song-profile'
+import { SongProfile } from '../../models/song-profile'
 
 @Component({
   selector: 'app-home',
