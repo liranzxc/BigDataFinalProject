@@ -4,7 +4,6 @@ import pymongo
 class MongoDbService:
     def __init__(self, config):
         self.config = config
-        print(self.config)
         self.client = self._get_mongo_db_client()
         self.db_name = self.config.mongodb_db_name
         self.db_result = self.config.mongodb_result_collection
@@ -14,7 +13,6 @@ class MongoDbService:
                                         connectTimeoutMS=self.config.mongodb_connection_timeout,
                                         socketTimeoutMS=self.config.mongodb_socket_timeout,
                                         serverSelectionTimeoutMS=self.config.mongodb_server_selection_timeout)
-        print(my_client)
         return my_client
 
     def upload_song_profiles(self, song_profiles: list):
@@ -30,7 +28,7 @@ class MongoDbService:
     def get_all_records(self, page=-1, size=-1):
         db = self.client[self.db_name]
         collection = db[self.db_result]
-        if page <= -1 and size <= -1:
+        if page > -1 and size > -1:
             return collection.find().skip(page * size).limit(size)
         else:
             return collection.find()

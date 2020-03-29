@@ -5,7 +5,7 @@ from models.song_profile import SongProfile
 def clean_word(word, allow_numbers=False):
     cleaned = ""
     numbers = '0123456789'
-    not_allowed = '!,.?":;@#$%^&*()=+-\\'
+    not_allowed = '!,.?":;@#$%^&*[]{}()=+-\\'
     if not allow_numbers:
         not_allowed += numbers
     for char in word:

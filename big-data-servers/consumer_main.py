@@ -23,14 +23,19 @@ def do_work(data, extra_data=None):
         # analyzer song and get result
         song = Song.from_json_to_song(song_json)
         analyze = extra_data["song_analyzer"].analyze(song)
+        print(extra_data["number_consumers"])
+        print(analyze)
         song_profiles.append(analyze)
 
     # save song_profiles on db mongo
     songs_profile_jsons_array = list(map(lambda sp: sp.to_mongodb_document_format(), song_profiles))
     extra_data["mongodb_service"].upload_song_profiles(songs_profile_jsons_array)
 
+    # print list of the _id values of the inserted documents:
+    # print(x.inserted_ids)
 
-def consumer_main_thread(num_consumers):
+
+def consumer_main_thread(number_consumers):
     config = ConfigService()
     mongodb_service = MongoDbService(config)
 
@@ -44,19 +49,20 @@ def consumer_main_thread(num_consumers):
     if os.getenv("DOCKER", False):
         sc.addPyFile("./all.zip")
     sys.path.insert(0, SparkFiles.getRootDirectory())
-    song_analyzer = SongAnalyzerService(sc, NRC(config))
 
-    # num_emotions = config.number_emotions
-    worker = Consumer(config.kafka_server_address, config.kafka_upload_topic)
+    # passing spark context and NRC instance (emotion analyzer)
+    song_analyzer = SongAnalyzerService(sc=sc, nrc=NRC(config))
+    BOOTSTRAP_SERVER = config.kafka_server_address
+    worker = Consumer(BOOTSTRAP_SERVER, config.kafka_upload_topic)
     worker.start_receive(do_work, extra_data={"song_analyzer": song_analyzer,
                                              "mongodb_service": mongodb_service,
-                                             "consumerNumber": num_consumers})
+                                             "number_consumers": number_consumers})
 
 
 if __name__ == "__main__":
     print('Downloading wordnet...')
     nltk.download('wordnet')
-    print('Finish download wordnet.')
+    print('Finished downloading wordnet.')
     NUMBER_OF_CONSUMER = int(os.getenv("NUMBER_OF_CONSUMER", 1))
     jobs = np.arange(0, NUMBER_OF_CONSUMER, 1)
     with concurrent.futures.ProcessPoolExecutor() as executor:
