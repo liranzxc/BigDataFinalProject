@@ -5,9 +5,12 @@
 </div>
 
 <div class="content-container">
-  <div class=database-actions>
+  <div class="database-actions">
     <button mat-raised-button color="primary" type="submit" (click)="deleteDatabase()">Delete database</button>
-  
+    <div><p>Pick the first letter of the artist to load:</p></div>
+    <div class="artist-letter">
+      <div class="letter" *ngFor="let letter of lettersToShow"><a [routerLink]="['/home/' + letter]" routerLinkActive="active"><p>{{ letter }}</p></a></div>
+    </div>
   </div>
   <mat-form-field>
     <mat-label>Filter</mat-label>
@@ -52,8 +55,7 @@
                 [barChartLabels]="element.histogram.barChartLabels"
                 [barChartType]="element.histogram.barChartType"
                 [barChartLegend]="element.histogram.barChartLegend"
-                [barChartOptions]="element.histogram.barChartOptions"
-              >
+                [barChartOptions]="element.histogram.barChartOptions">
 
               </app-histogram>
             </div>

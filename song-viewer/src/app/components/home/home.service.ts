@@ -37,7 +37,8 @@ export class HomeService {
       {headers :{
           'Accept': 'application/json',
           'Access-Control-Allow-Origin': '*'
-        }}).toPromise();
+        }
+      }).toPromise();
     return res;
   }
 
