@@ -67,8 +67,8 @@ export class HomeComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
 
     const filter = this.db.filter((profile : SongProfile) => {
-          return profile.song.name.toLowerCase().includes(filterValue) ||
-            profile.song.artist.toLowerCase().includes(filterValue) ||
+          return profile.song_name.toLowerCase().includes(filterValue) ||
+            profile.artist.toLowerCase().includes(filterValue) ||
             profile.emotion.includes(filterValue) ||
             profile.number_of_words.toString().includes(filterValue);
     });

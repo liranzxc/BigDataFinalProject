@@ -1,6 +1,8 @@
 import { Song } from './song'
 export interface SongProfile {
-  song : Song
+  song_name : string,
+  artist : string,
+  lyrics : string,
   number_of_words :number;
   histogram : {
     barChartType?: any;
