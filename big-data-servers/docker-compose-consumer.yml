@@ -6,7 +6,7 @@ services:
       context: .
     command: python3.7 consumer_main.py
     environment:
-      UPLOAD_TOPIC: "test26"
+      UPLOAD_TOPIC: "test27"
       KAFKA_HOST: "kafka"
       SPARK_LOCAL: "spark://spark-master:7077"
       MONGODB_HOST : "mongodb"

@@ -14,7 +14,8 @@ export class HomeService {
   {
     const res:any = await this.http.get(this.URL_SERVER+"/mongodb/count",
       {headers :{
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Access-Control-Allow-Origin': '*'
         }}).toPromise();
 
     return res["total"];
@@ -24,16 +25,19 @@ export class HomeService {
   {
     let res:SongProfile[] = await this.http.get<SongProfile[]>(`${this.URL_SERVER}/mongodb?page=${page}&size=${size}`,
       {headers :{
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Access-Control-Allow-Origin': '*'
         }}).toPromise();
+    return res;
+  }
 
-      res = res.map(profile => {
-
-        // @ts-ignore
-        profile.song = JSON.parse(profile.song);
-        return profile;
-
-      });
+  async getAllRecordsByLetter(page:number=0,size:number=5, letter:string)
+  {
+    let res:SongProfile[] = await this.http.get<SongProfile[]>(`${this.URL_SERVER}/mongodb/artist/${letter}?page=${page}&size=${size}`,
+      {headers :{
+          'Accept': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        }}).toPromise();
     return res;
   }
 
@@ -41,7 +45,8 @@ export class HomeService {
   {
     const res:any = await this.http.delete(this.URL_SERVER+"/mongodb",
       {headers :{
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'Access-Control-Allow-Origin': '*'
         }}).toPromise();
 
     console.log(res);

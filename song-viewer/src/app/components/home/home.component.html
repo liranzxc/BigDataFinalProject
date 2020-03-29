@@ -3,7 +3,12 @@
 <div class="menu-container">
   <app-menu></app-menu>
 </div>
+
 <div class="content-container">
+  <div class=database-actions>
+    <button mat-raised-button color="primary" type="submit" (click)="deleteDatabase()">Delete database</button>
+  
+  </div>
   <mat-form-field>
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Type here to find a song">
@@ -14,12 +19,12 @@
 
       <ng-container matColumnDef="artist">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Artist </th>
-        <td mat-cell *matCellDef="let row"> {{row.song.artist}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.artist}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="name">
+      <ng-container matColumnDef="song_name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Song name </th>
-        <td mat-cell *matCellDef="let row"> {{row.song.name}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.song_name}} </td>
       </ng-container>
 
       <ng-container matColumnDef="emotion">
@@ -38,9 +43,9 @@
           <div class="container" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <mat-label>Lyrics</mat-label>
             <div class="lyrics">
-              {{element.song.lyrics}}
+              {{element.lyrics}}
             </div>
-            <div class=histogram>
+            <div class=histogram style="display: block" *ngIf="element.histogram.barChartData">
 
               <app-histogram
                 [barChartData]="element.histogram.barChartData"

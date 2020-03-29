@@ -1,3 +1,6 @@
+import re
+
+import bson
 import pymongo
 
 
@@ -33,6 +36,15 @@ class MongoDbService:
         else:
             return collection.find()
 
+    def get_records_artist_by_letter(self, page=-1, size=-1, letter='A'):
+        db = self.client[self.db_name]
+        collection = db[self.db_result]
+        regx = re.compile("^" + letter, re.IGNORECASE)
+        if page > -1 and size > -1:
+            return collection.find({"artist": regx}).skip(page * size).limit(size)
+        else:
+            return collection.find({"artist": regx})
+
     def get_counts(self):
         db = self.client[self.db_name]
         collection = db[self.db_result]
@@ -41,4 +53,4 @@ class MongoDbService:
     def delete_all_records(self):
         db = self.client[self.db_name]
         collection = db[self.db_result]
-        return collection.remove()
+        return collection.delete_many({})

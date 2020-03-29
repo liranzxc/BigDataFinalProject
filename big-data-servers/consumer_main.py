@@ -46,6 +46,7 @@ def consumer_main_thread(number_consumers):
                      .set("spark.cores.max", int(os.getenv("MAX_CORES", 1)))
                      .set("spark.scheduler.allocation.file", "./fairscheduler.xml")
                      .setMaster(config.spark_local))
+    sc.setLogLevel("WARN")
     if os.getenv("DOCKER", False):
         sc.addPyFile("./all.zip")
     sys.path.insert(0, SparkFiles.getRootDirectory())

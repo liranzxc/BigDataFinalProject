@@ -34,7 +34,9 @@ class SongAnalyzerService:
         return rdd_lyrics_song.count()
 
     def _create_histogram(self, rdd_lyrics):
-        return rdd_lyrics.map(lambda word: word.lower()).countByValue()
+        histogram = rdd_lyrics.map(lambda word: word.lower() if len(word) > 1 else '').countByValue()
+        histogram.pop('', None)  # filter short words (not real words)
+        return histogram
 
     def _get_words_rdd(self, lyrics: str):
         rdd = self.sc.parallelize([lyrics]).flatMap(lambda line: clean_sentence(line))

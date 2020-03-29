@@ -20,11 +20,11 @@ import {HomeService} from "./home.service";
   ]
 })
 export class HomeComponent implements OnInit {
-  displayedColumns: string[] = ['artist', 'name', 'emotion', 'size'];
+  displayedColumns: string[] = ['artist', 'song_name', 'emotion', 'size'];
   dataSource: MatTableDataSource<SongProfile>;
   expandedElement: SongProfile | null;
-  nextPage: number = 0;
-  pageSize: number = 100;
+  nextPage: number;
+  pageSize: number;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -34,23 +34,33 @@ export class HomeComponent implements OnInit {
 
   }
 
-  dataSubscription()
+  dataSubscription(letter:string, erase:boolean)
   {
-    this.homeService.getAllRecords(this.nextPage,this.pageSize).then((records:SongProfile[]) => {
+    this.homeService.getAllRecordsByLetter(this.nextPage,this.pageSize, letter).then((records:SongProfile[]) => {
       this.nextPage +=1
-      this.db = [...this.db, ...records]
+      if(erase)
+      {
+        this.db = records;
+      }
+      else
+      {
+        this.db = [...this.db, ...records];
+      }
+      
       this.dataSource = new MatTableDataSource(this.db);
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       if(records.length != 0)
       {
-        this.dataSubscription();
+        this.dataSubscription(letter, false);
       }
     });
   }
   ngOnInit() {
-    this.dataSubscription();
+    this.nextPage = 0
+    this.pageSize = 1000
+    this.dataSubscription('A', true);
   }
 
   applyFilter(event: Event) {
@@ -91,12 +101,21 @@ export class HomeComponent implements OnInit {
     element.histogram.barChartOptions = barChartOptions;
     element.histogram.barChartLegend = barChartLegend;
     element.histogram.barChartType = barChartType;
-
     return element;
   }
   clickOnRow(element: any) {
     this.expandedElement = this.expandedElement === element ? null : element;
+    if(this.expandedElement != null)
+    {
+     this.expandedElement = this.createHistogramChart(this.expandedElement);
+    }
+    
+    
+  }
 
-    this.expandedElement = this.createHistogramChart(this.expandedElement)
+  deleteDatabase()
+  {
+    this.homeService.deleteAllRecords();
+    console.log("press delete")
   }
 }
