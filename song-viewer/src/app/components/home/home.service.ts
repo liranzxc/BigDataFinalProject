@@ -17,7 +17,6 @@ export class HomeService {
           'Accept': 'application/json',
           'Access-Control-Allow-Origin': '*'
         }}).toPromise();
-
     return res["total"];
   }
 

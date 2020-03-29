@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
   nextPage: number = 0;
   pageSize: number = 1000000;
   currentJob: number = 0;
+  totalRecords: number = 0;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -40,6 +41,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.homeService.getCounterMongodb().then(number =>
+      this.totalRecords = number
+    )
     this.updateData('', true, this.currentJob);
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
@@ -55,9 +59,7 @@ export class HomeComponent implements OnInit {
         this.currentJob = num;
         this.nextPage = 0;
         this.updateData(letter, true, num);
-    },
-    err => console.error('Observer got an error: ' + err),
-    () => console.log("null"))
+    })
     
   }
 

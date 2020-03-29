@@ -1,17 +1,10 @@
-import os
-import threading
-
-from flask import Flask, request
-from baseClasses.producer import Producer
-from services.config_service import ConfigService
-from services.csv_service import CsvService
-from services.mongodb_service import MongoDbService
 from bson.json_util import dumps
+from flask import Flask, request
 from flask_cors import CORS, cross_origin
-
+from services.config_service import ConfigService
+from services.mongodb_service import MongoDbService
 app = Flask(__name__)
 CORS(app)
-
 import subprocess
 import enum
 
@@ -47,7 +40,7 @@ def docker_compose_operation(docker_compose_name_file=None, operation=OperateDoc
 
 
 @app.route("/stopConsumer", methods=["GET"])
-def stopConsumer():
+def stop_consumer():
     # shut down docker compose consumer
     global consumer_state
     docker_compose_operation(docker_compose_name_file=DOCKER_COMPOSE_CONSUMER, operation=OperateDocker.DOWN)
@@ -57,21 +50,21 @@ def stopConsumer():
 
 
 @app.route("/consumerState", methods=["GET"])
-def consumerStatus():
+def consumer_status():
     return dumps({"state": consumer_state, "status": 200})
 
 
 # delete db data
 @app.route("/mongodb", methods=["DELETE"])
 @cross_origin(allow_headers=['Content-Type', 'Access-Control-Allow-Origin'])
-def deleteAllMongodb():
+def delete_database():
     mongodb_service.delete_all_records()
     return dumps({"message": "db deleted", "status": 200})
 
 
 @app.route("/mongodb", methods=["GET"])
 @cross_origin(allow_headers=['Content-Type', 'Access-Control-Allow-Origin'])
-def getAllRecords():
+def get_all_records():
     page = int(request.args.get("page", 0))
     size = int(request.args.get("size", 5))
     records = mongodb_service.get_all_records(page=page, size=size)
@@ -80,7 +73,7 @@ def getAllRecords():
 
 @app.route("/mongodb/artist/<string:letter>", methods=["GET"])
 @cross_origin(allow_headers=['Content-Type', 'Access-Control-Allow-Origin'])
-def getAllRecordsByArtistLetter(letter):
+def get_all_records_by_artist(letter):
     page = int(request.args.get("page", 0))
     size = int(request.args.get("size", 5))
     records = mongodb_service.get_records_artist_by_letter(page=page, size=size, letter=letter)
@@ -89,13 +82,13 @@ def getAllRecordsByArtistLetter(letter):
 
 @app.route("/mongodb/count", methods=["GET"])
 @cross_origin(allow_headers=['Content-Type', 'Access-Control-Allow-Origin'])
-def getCount():
+def get_count():
     count = mongodb_service.get_counts()
     return dumps({"total": count})
 
 
 @app.route("/createEnv", methods=["POST"])
-def createEnvConfig():
+def start_consumer():
     global consumer_state
     json = request.json
     MAX_CORES = str(json["numOfCores"])
@@ -118,7 +111,7 @@ def createEnvConfig():
 
 
 @app.route("/startProducer")
-def startProducer():
+def start_producer():
     docker_compose_operation(docker_compose_name_file=DOCKER_COMPOSE_PRODUCER, operation=OperateDocker.UP)
     return dumps({"message": "producer up", "status": 200})
 

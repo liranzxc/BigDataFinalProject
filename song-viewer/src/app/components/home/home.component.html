@@ -6,10 +6,14 @@
 
 <div class="content-container">
   <div class="database-actions">
+    <div class="artist-prompt">Total records in database: {{ totalRecords }}</div>
     <button mat-raised-button color="primary" type="submit" (click)="deleteDatabase()">Delete database</button>
-    <div><p>Pick the first letter of the artist to load:</p></div>
+    <div class="artist-prompt"><h3>Pick the first letter of the artist to load:</h3></div>
     <div class="artist-letter">
-      <div class="letter" *ngFor="let letter of lettersToShow"><a [routerLink]="['/home/' + letter]" routerLinkActive="active"><p>{{ letter }}</p></a></div>
+      <div class="letter"><a routerLink="/home/" routerLinkActive="active"><button mat-raised-button color="warn" type="submit">ALL ARTISTS</button></a></div>
+    </div>
+    <div class="artist-letter">
+      <div class="letter" *ngFor="let letter of lettersToShow"><a [routerLink]="['/home/' + letter]" routerLinkActive="active"><button mat-mini-fab color="primary" type="submit">{{ letter }}</button></a></div>
     </div>
   </div>
   <mat-form-field>
