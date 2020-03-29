@@ -2,7 +2,6 @@ import pandas as pd
 from nltk.stem import WordNetLemmatizer
 
 
-
 class NRC:
     def __init__(self, config):
         self.config = config
@@ -14,9 +13,3 @@ class NRC:
         word = self.lemmatizer.lemmatize(word)
         selected_words = self.df[(self.df["word"] == word) & (self.df["association"] == 1)]
         return selected_words["emotion"].tolist()
-
-#
-# # test
-# words = ["love", "happy", "kill"]
-# nrc = NRC()
-# nrc.get_emotions_association(words[0])

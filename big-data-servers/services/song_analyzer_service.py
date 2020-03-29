@@ -2,7 +2,6 @@ from models.song import Song
 from models.song_profile import SongProfile
 
 
-
 def clean_word(word, allow_numbers=False):
     cleaned = ""
     numbers = '0123456789'
@@ -26,40 +25,32 @@ def clean_sentence(sentence):
 
 
 class SongAnalyzerService:
-    def __init__(self, nrc):
+    def __init__(self, sc, nrc):
+        self.sc = sc
         self.nrc = nrc
 
-    def _create_histogram(self, word_database):
-        word_histogram = {}
-        word_set = set(word_database)
-        for word in word_set:
-            word_histogram[word] = word_database.count(word)
-        return word_histogram
+    # counts amount of words in the string
+    def _count_words(self, rdd_lyrics_song):
+        return rdd_lyrics_song.count()
 
-    def _get_words(self, lyrics: str):
-        lyrics = lyrics.split("\r\n")
-        words = []
-        for line in lyrics:
-            words.append(clean_sentence(line))
-        return words
+    def _create_histogram(self, rdd_lyrics):
+        return rdd_lyrics.map(lambda word: word.lower()).countByValue()
 
-    def _get_emotion_histogram(self, histogram):
+    def _get_words_rdd(self, lyrics: str):
+        rdd = self.sc.parallelize([lyrics]).flatMap(lambda line: clean_sentence(line))
+        return rdd
+
+    def _get_popular_emotion(self, histogram):
         emotion = []
         for w in sorted(histogram, key=histogram.get, reverse=True):
-            emotion.append(self.nrc.get_emotions_association(w))
-            if len(emotion):
+            emotion.extend(self.nrc.get_emotions_association(w))
+            if len(emotion) is not 0:
                 break
         return emotion
 
     def analyze(self, song: Song):
-        word_database = self._get_words(song.lyrics)
-        word_count = len(set(word_database))
-        histogram_words = self._create_histogram(word_database)
-        emotion = self._get_emotion_histogram(histogram=histogram_words)
-        return SongProfile(song, word_count, histogram_words, emotion)
-
-
-
-
-
-
+        rdd_lyrics_song = self._get_words_rdd(song.lyrics)
+        word_count = self._count_words(rdd_lyrics_song)
+        histogram_words = self._create_histogram(rdd_lyrics_song)
+        emotion_list = self._get_popular_emotion(histogram=histogram_words)
+        return SongProfile(song, word_count, histogram_words, emotion_list)  # emotion

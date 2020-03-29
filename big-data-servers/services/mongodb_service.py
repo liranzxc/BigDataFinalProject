@@ -22,6 +22,11 @@ class MongoDbService:
         collection = db[self.db_result]
         return collection.insert_many(song_profiles)  ## status from db
 
+    def upload_song_profile(self, song_profile: dict):
+        db = self.client[self.db_name]
+        collection = db[self.db_result]
+        return collection.insert(song_profile)  ## status from db
+
     def get_all_records(self, page=-1, size=-1):
         db = self.client[self.db_name]
         collection = db[self.db_result]

@@ -24,9 +24,6 @@ class ConfigService:
         self.send_batch_timeout = 40
         self.spark_local = os.getenv("SPARK_LOCAL", "local[*]")
         self.spark_emolex_format = "com.databricks.spark.csv"
-        # self.song_json_artist = 'artist'
-        # self.song_json_lyrics = "text"
-        # self.song_json_name = "song_name"
 
         self.emotion_lex_path = os.getenv("NRC_EMOTION_LEX", "datasets/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt")
 
