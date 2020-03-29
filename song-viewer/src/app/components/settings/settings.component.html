@@ -3,45 +3,53 @@
     <div class="menu-container">
         <app-menu></app-menu>
     </div>
+
     <div class="content-container">
-        <div layout="column" flex class="settings">
-            <div flex>
-                <mat-form-field>
-                    <mat-label>Define number of consumers</mat-label>
-                    <textarea matInput placeholder="Write number of consumers"></textarea>
-                </mat-form-field>
-            </div>
-            <div flex>
-                <button mat-raised-button color="primary">Accept number of consumers</button>
-            </div>
-        </div>
+    <form [formGroup]="this.form" (submit)="submitConfigSetting()">
 
-        <div layout="column" flex>
-            <div flex>
-                <mat-form-field>
-                    <mat-label>Define number of cores</mat-label>
-                    <textarea matInput placeholder="Write number of cores"></textarea>
-                </mat-form-field>
-            </div>
-            <div flex>
-                <button mat-raised-button color="primary">Accept number of cores</button>
-            </div>
-        </div>
+      <div class="title-container">
+        <p>Spark worker config</p>
+        <hr>
+        <mat-form-field appearance="fill">
+          <mat-label>Number of workers</mat-label>
+          <mat-select formControlName="numOfWorkers" required>
+            <mat-option *ngFor="let number of numberOfWorkersOptions" [value]="number">
+              {{number}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
 
-        <div layout="column" flex>
-            <div flex>
-                <mat-form-field>
-                    <mat-label>Define memory per consumer</mat-label>
-                    <textarea matInput placeholder="Write memory per consumer"></textarea>
-                </mat-form-field>
-            </div>
-            <div flex>
-                <button mat-raised-button color="primary">Accept memory per consumer</button>
-            </div>
-        </div>
+        <mat-form-field appearance="fill">
+          <mat-label>Cores per worker</mat-label>
+          <mat-select formControlName="numOfCores"  required>
+            <mat-option *ngFor="let number of numberOfCoresOptions" [value]="number">
+              {{number}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
 
-        <mat-slide-toggle>Turn power on/off</mat-slide-toggle>
-        <mat-slide-toggle>Consumers turn on/off</mat-slide-toggle>
-        <mat-slide-toggle>Producers turn on/off</mat-slide-toggle>
+        <mat-form-field appearance="fill">
+          <mat-label>Memory per worker</mat-label>
+          <mat-select formControlName="memoryPerWorker" required>
+            <mat-option *ngFor="let memory of memoryOptions" [value]="memory">
+              {{memory}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-divider></mat-divider>
+        <p>Power setting </p>
+        <br>
+        <mat-slide-toggle   [formControl]="activate" (change)="toggleConsumer($event)">Consumer Off/On</mat-slide-toggle>
+        <br>
+        <p *ngIf="this.sentConfig === true">Config created in few moments consumer start work</p>
+      </div>
+    </form>
+      <br>
+    <button mat-raised-button color="primary" (click)="startProducer()">Start Producer</button>
     </div>
+
+
 </div>

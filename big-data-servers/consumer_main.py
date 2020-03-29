@@ -21,19 +21,13 @@ def do_work(data, extra_data=None):
     print("Consumer received a new batch")
     for song_json in data:
         # analyzer song and get result
-        print("Consumer working on song")
         song = Song.from_json_to_song(song_json)
         analyze = extra_data["song_analyzer"].analyze(song)
-        print(extra_data["consumerNumber"])
-        print(analyze)
         song_profiles.append(analyze)
 
     # save song_profiles on db mongo
     songs_profile_jsons_array = list(map(lambda sp: sp.to_mongodb_document_format(), song_profiles))
-    x = extra_data["mongodb_service"].upload_song_profiles(songs_profile_jsons_array)
-
-    # print list of the _id values of the inserted documents:
-    print(x.inserted_ids)
+    extra_data["mongodb_service"].upload_song_profiles(songs_profile_jsons_array)
 
 
 def consumer_main_thread(num_consumers):
@@ -53,8 +47,7 @@ def consumer_main_thread(num_consumers):
     song_analyzer = SongAnalyzerService(sc, NRC(config))
 
     # num_emotions = config.number_emotions
-    BOOTSTRAP_SERVER = config.kafka_server_address
-    worker = Consumer(BOOTSTRAP_SERVER, config.kafka_upload_topic)
+    worker = Consumer(config.kafka_server_address, config.kafka_upload_topic)
     worker.start_receive(do_work, extra_data={"song_analyzer": song_analyzer,
                                              "mongodb_service": mongodb_service,
                                              "consumerNumber": num_consumers})

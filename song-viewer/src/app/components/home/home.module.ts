@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {SettingService} from "./settings.service";
+import {HomeService} from "./home.service";
+
+
 
 @NgModule({
   declarations: [],
-  exports : [],
-  providers : [SettingService],
+  providers:[HomeService],
   imports: [
     CommonModule
   ]
 })
-export class SettingModule { }
+export class HomeModule { }

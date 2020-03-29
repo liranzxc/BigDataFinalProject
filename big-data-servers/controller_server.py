@@ -2,6 +2,8 @@ import os
 import threading
 
 from flask import Flask, request
+from flask_cors import cross_origin
+
 from baseClasses.producer import Producer
 from services.config_service import ConfigService
 from services.csv_service import CsvService
@@ -30,6 +32,7 @@ def deleteAllMongodb():
 
 
 @app.route("/mongodb", methods=["GET"])
+@cross_origin(allow_headers=['Content-Type', 'Access-Control-Allow-Origin'])
 def getAllRecords():
     page = int(request.args.get("page", 0))
     size = int(request.args.get("size", 5))

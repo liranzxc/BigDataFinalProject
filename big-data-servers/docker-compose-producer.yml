@@ -9,7 +9,7 @@ services:
     environment:
       UPLOAD_TOPIC: "test26"
       KAFKA_HOST: "kafka"
-      BATCH_SIZE : 200
+      BATCH_SIZE : 5
     networks:
       - app-tier
 

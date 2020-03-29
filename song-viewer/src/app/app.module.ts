@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TemplateBaseComponent } from './template-base/template-base.component';
+import { TemplateBaseComponent } from './components/template-base/template-base.component';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
@@ -19,7 +19,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
-import { MenuComponent } from './components/menu/menu.component';
+import { MenuComponent } from './components/template-base/menu/menu.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+import { HistogramComponent } from './components/histogram/histogram.component';
+import {ChartsModule} from "ng2-charts";
 
 
 @NgModule({
@@ -28,10 +32,13 @@ import { MenuComponent } from './components/menu/menu.component';
     TemplateBaseComponent,
     SettingComponent,
     HomeComponent,
-    MenuComponent
+    MenuComponent,
+    HistogramComponent
   ],
   imports: [
     BrowserModule,
+    ChartsModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
@@ -45,7 +52,8 @@ import { MenuComponent } from './components/menu/menu.component';
     MatFormFieldModule,
     MatInputModule,
     MatSlideToggleModule,
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
