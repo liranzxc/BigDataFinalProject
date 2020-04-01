@@ -1,8 +1,5 @@
-export class Settings {
-    numOfConsumers:number;
+export interface SettingsForm {
+    numOfWorkers:number;
     numOfCores:number;
-    memoryPerConsumer:number;
-    isPowerOn:boolean;
-    isConsumersOn:boolean;
-    isProducersOn: boolean;
+    memoryPerWorker:string;
   }

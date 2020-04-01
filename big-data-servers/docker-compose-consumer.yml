@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  consumer:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    command: python3.7 consumer_main.py
+    environment:
+      UPLOAD_TOPIC: "test27"
+      KAFKA_HOST: "kafka"
+      SPARK_LOCAL: "spark://spark-master:7077"
+      MONGODB_HOST : "mongodb"
+      NUMBER_OF_CONSUMER: "${NUMBER_OF_CONSUMER}"
+      MAX_MEMORY: "${MAX_MEMORY}"
+      MAX_CORES : "${MAX_CORES}"
+    networks:
+      - app-tier
+
+
+
+networks:
+  app-tier:
+    driver: bridge

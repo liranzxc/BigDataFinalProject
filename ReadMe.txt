@@ -1,4 +1,17 @@
-
+Install Docker and operate with linux containers
+    - Build all containers
+        1. open cmd inside big-data-servers
+        2. $docker-compose up -d (servers should build and go up)
+        3. $docker-compose -f docker-compose-producer.yml build
+        4. $docker-compose -f docker-compose-consumer.yml build
+    - Start Client API
+        1. $python controller-server.py (server api for client - localhost:5000)
+    - Start client
+        1. Install npm (https://nodejs.org/en/ - version 12.16)
+        2. cd into song-viewer folder
+        3. $npm install -g @angular/cli
+        4. $npm install
+        5. $ng serve (server should be open at localhost:4200)
 
 To start a spark cluster, you need to download :
 
@@ -31,46 +44,12 @@ have fun :)
 
 Running Ubuntu requires Java 8 version.
 
-## example run :
-
-(base) lirannh@192:~/Desktop/BigData$ docker-compose up -d
-WARNING: The Docker Engine you're using is running in swarm mode.
-
-Compose does not use swarm mode to deploy services to multiple nodes in a swarm. All containers will be scheduled on the current node.
-
-To enter the kafka manager ui - go to URL http://172.25.0.14:9000/
-
-To deploy your application across the swarm, use `docker stack deploy`.
-
-Creating network "bigdata_default" with the default driver
-Creating spark-master ... done
-Creating spark-worker-1 ... done
-(base) lirannh@192:~/Desktop/BigData$
-(base) lirannh@192:~/Desktop/BigData$
-(base) lirannh@192:~/Desktop/BigData$ python spark_example/sparkHelloWorld.py
-20/02/22 17:47:55 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
-Setting default log level to "WARN".
-To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
-10
-(base) lirannh@192:~/Desktop/BigData$
-
 
 ## docker-compose down
 
-(base) lirannh@192:~/Desktop/BigData$ docker-compose down
-Stopping spark-worker-1 ... done
-Stopping spark-master   ... done
-Removing spark-worker-1 ... done
-Removing spark-master   ... done
-Removing network bigdata_default
-(base) lirannh@192:~/Desktop/BigData$
+$ docker-compose down
 
-
-
-
-## scale
-
+# scale
 
 docker-compose up -d --scale spark-worker=2
 docker-compose --file docker-compose-producer.yml up

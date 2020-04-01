@@ -1,0 +1,18 @@
+version: '3.7'
+services:
+  producer:
+    container_name: producer
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    command: python3.7 producer_main.py
+    environment:
+      UPLOAD_TOPIC: "test27"
+      KAFKA_HOST: "kafka"
+      BATCH_SIZE : 5
+    networks:
+      - app-tier
+
+networks:
+  app-tier:
+    driver: bridge
