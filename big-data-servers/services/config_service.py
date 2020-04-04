@@ -3,6 +3,7 @@ import os
 
 class ConfigService:
     def __init__(self):
+
         self.kafka_host = os.getenv("KAFKA_HOST", "localhost")
         self.kafka_port = os.getenv("KAFKA_PORT", "9092")
         self.kafka_upload_topic = os.getenv("UPLOAD_TOPIC", "test26")
@@ -25,6 +26,6 @@ class ConfigService:
         self.spark_emolex_format = "com.databricks.spark.csv"
         self.song_lyrics_csv = "datasets/songdata.csv"
         self.emotion_lex_path = os.getenv("NRC_EMOTION_LEX", "datasets/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt")
-
+        self.spark_scheduler = "./fairscheduler.xml"
         self.kafka_server_address = self.kafka_host + ":" + self.kafka_port
         self.mongodb_address = "mongodb://" + self.mongodb_host + ":" + self.mongodb_port + "/"

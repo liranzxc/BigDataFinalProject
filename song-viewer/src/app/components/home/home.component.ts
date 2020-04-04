@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
   dataSource: MatTableDataSource<SongProfile>;
   expandedElement: SongProfile | null;
   nextPage: number = 0;
-  pageSize: number = 1000000;
+  pageSize: number = 100;
   currentJob: number = 0;
   totalRecords: number = 0;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

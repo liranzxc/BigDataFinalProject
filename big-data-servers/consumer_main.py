@@ -40,7 +40,7 @@ def consumer_main_thread(number_consumers):
         .getOrCreate(SparkConf().set("spark.executor.memory", MAX_MEMORY)
                      .set("spark.driver.memory", MAX_MEMORY)
                      .set("spark.cores.max", int(os.getenv("MAX_CORES", 1)))
-                     .set("spark.scheduler.allocation.file", "./fairscheduler.xml")
+                     .set("spark.scheduler.allocation.file", config.spark_scheduler)
                      .setMaster(config.spark_local))
     sc.setLogLevel("WARN")
     if os.getenv("DOCKER", False):
