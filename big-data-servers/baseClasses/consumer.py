@@ -1,5 +1,6 @@
-from kafka import KafkaConsumer
 import json
+
+from kafka import KafkaConsumer
 
 
 class Consumer:
@@ -24,9 +25,3 @@ class Consumer:
             except Exception as e:
                 print(e)
                 pass
-
-            # print(message_json)
-            # print("%s:%d:%d: key=%s value=%s" % (message.topic, message.partition,
-            #                                      message.offset, message.key,
-            #                                      message.value))
-

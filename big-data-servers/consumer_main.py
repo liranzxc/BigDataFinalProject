@@ -1,19 +1,18 @@
 import concurrent
+import os
+import sys
 from concurrent.futures import ThreadPoolExecutor
 
+import nltk
 import numpy as np
+from pyspark import SparkContext, SparkConf, SparkFiles
 
 from baseClasses.consumer import Consumer
-from services.nrc_service import NRC
+from models.song_profile import Song
 from services.config_service import ConfigService
 from services.mongodb_service import MongoDbService
+from services.nrc_service import NRC
 from services.song_analyzer_service import SongAnalyzerService
-from pyspark import SparkContext, SparkConf, SparkFiles
-import nltk
-from models.song_profile import Song
-import sys
-import os
-import threading
 
 
 def do_work(data, extra_data=None):
@@ -30,9 +29,6 @@ def do_work(data, extra_data=None):
     # save song_profiles on db mongo
     songs_profile_jsons_array = list(map(lambda sp: sp.to_mongodb_document_format(), song_profiles))
     extra_data["mongodb_service"].upload_song_profiles(songs_profile_jsons_array)
-
-    # print list of the _id values of the inserted documents:
-    # print(x.inserted_ids)
 
 
 def consumer_main_thread(number_consumers):
@@ -54,10 +50,10 @@ def consumer_main_thread(number_consumers):
     # passing spark context and NRC instance (emotion analyzer)
     song_analyzer = SongAnalyzerService(sc=sc, nrc=NRC(config))
     BOOTSTRAP_SERVER = config.kafka_server_address
-    worker = Consumer(BOOTSTRAP_SERVER, config.kafka_upload_topic)
-    worker.start_receive(do_work, extra_data={"song_analyzer": song_analyzer,
-                                             "mongodb_service": mongodb_service,
-                                             "number_consumers": number_consumers})
+    kafka_worker = Consumer(BOOTSTRAP_SERVER, config.kafka_upload_topic)
+    kafka_worker.start_receive(do_work, extra_data={"song_analyzer": song_analyzer,
+                                              "mongodb_service": mongodb_service,
+                                              "number_consumers": number_consumers})
 
 
 if __name__ == "__main__":

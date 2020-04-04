@@ -1,6 +1,7 @@
+import json
+
 from bson import json_util
 from kafka import KafkaProducer
-import json
 
 
 class Producer:
@@ -22,4 +23,3 @@ class Producer:
     def on_send_error(self, exception):
         print('Error: {}'.format(exception))
         # handle exception
-        # TODO ?

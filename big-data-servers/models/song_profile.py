@@ -1,5 +1,4 @@
 from models.song import Song
-import json
 
 
 class SongProfile:

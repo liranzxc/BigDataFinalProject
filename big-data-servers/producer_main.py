@@ -8,7 +8,7 @@ if __name__ == "__main__":
     # read config file
     config = ConfigService()
     # load csv
-    df_songs, headers, songs_json = CsvService().read_csv()
+    df_songs, headers, songs_json = CsvService().read_csv(config.song_lyrics_csv)
 
     # upload songs via producer
     producer = Producer(config.kafka_server_address, config.kafka_upload_topic)

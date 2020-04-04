@@ -1,4 +1,3 @@
-import json
 import os
 
 
@@ -24,7 +23,7 @@ class ConfigService:
         self.send_batch_timeout = 40
         self.spark_local = os.getenv("SPARK_LOCAL", "local[*]")
         self.spark_emolex_format = "com.databricks.spark.csv"
-
+        self.song_lyrics_csv = "datasets/songdata.csv"
         self.emotion_lex_path = os.getenv("NRC_EMOTION_LEX", "datasets/NRC-Emotion-Lexicon-Wordlevel-v0.92.txt")
 
         self.kafka_server_address = self.kafka_host + ":" + self.kafka_port
