@@ -1,3 +1,5 @@
+Make sure Docker is up with linux containers before pressing on start.bat
+
 Install Docker and operate with linux containers
     - Build all containers
         1. open cmd inside big-data-servers
