@@ -1,5 +1,7 @@
 from csv import reader
 from services.config_service import ConfigService
+import time
+
 
 artist_col_index = 0
 song_name_col_index = 1
@@ -22,6 +24,7 @@ def count_words(str):
 if __name__ == "__main__":
     config = ConfigService()
     result_words_dict = dict()
+    t = time.process_time()
     with open(config.song_lyrics_csv, 'r') as read_obj:
         # pass the file object to reader() to get the reader object
         csv_reader = reader(read_obj)
@@ -34,8 +37,10 @@ if __name__ == "__main__":
             artist_name = row[artist_col_index]
             count_dict = count_words(row[lyrics_col_index])
             if artist_name in result_words_dict:
-                if song_name not in result_words_dict[artist_name]:
-                    result_words_dict[artist_name][song_name] = count_dict
+                result_words_dict[artist_name][song_name] = count_dict
             else:
                 result_words_dict[artist_name] = {}
                 result_words_dict[artist_name][song_name] = count_dict
+
+    elapsed_time = time.process_time() - t
+    print(f'Time elapsed since word count started: {elapsed_time}')
