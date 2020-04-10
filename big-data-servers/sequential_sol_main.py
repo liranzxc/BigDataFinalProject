@@ -1,6 +1,8 @@
 from csv import reader
 from services.config_service import ConfigService
 import time
+from services.nrc_service import NRC
+
 
 artist_col_index = 0
 song_name_col_index = 1
@@ -18,11 +20,14 @@ def count_words(str):
 
     return counts
 
-def get_emotion(input):
-    for dict in input:
-        word = dict[0]
-        counter = dict[1]
-        print(f'word = {word}, counter = {counter}')
+def get_emotion(words_counts_tuples, nrc):
+    emotion = []
+    for tuple in words_counts_tuples:
+        word = tuple[0]
+        emotion.extend(nrc.get_emotions_association(word))
+        if len(emotion) is not 0:
+            break
+    return emotion
 
 if __name__ == "__main__":
     config = ConfigService()
@@ -42,12 +47,16 @@ if __name__ == "__main__":
             artist_name = row[artist_col_index]
             count_dict = count_words(row[lyrics_col_index])
             sorted_count_dict = sorted(count_dict.items(), key=lambda x: x[1], reverse=True)
-            get_emotion(sorted_count_dict)
+            song_emotions = get_emotion(sorted_count_dict, NRC(config))
             if artist_name in result_words_dict:
                 result_words_dict[artist_name][song_name] = sorted_count_dict
+                emotions[artist_name][song_name] = song_emotions
             else:
                 result_words_dict[artist_name] = {}
+                emotions[artist_name] = {}
                 result_words_dict[artist_name][song_name] = sorted_count_dict
+                emotions[artist_name][song_name] = song_emotions
+            # print("iteration ended")
 
     elapsed_time = time.process_time() - t
     print(f'Time elapsed since word count started: {elapsed_time}')
