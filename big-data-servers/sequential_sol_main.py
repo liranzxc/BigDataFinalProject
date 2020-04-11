@@ -17,7 +17,6 @@ def count_words(str):
             counts[word] += 1
         else:
             counts[word] = 1
-
     return counts
 
 def get_emotion(words_counts_tuples, nrc):
@@ -50,13 +49,12 @@ if __name__ == "__main__":
             song_emotions = get_emotion(sorted_count_dict, NRC(config))
             if artist_name in result_words_dict:
                 result_words_dict[artist_name][song_name] = sorted_count_dict
-                emotions[artist_name][song_name] = song_emotions
             else:
                 result_words_dict[artist_name] = {}
                 emotions[artist_name] = {}
                 result_words_dict[artist_name][song_name] = sorted_count_dict
-                emotions[artist_name][song_name] = song_emotions
-            # print("iteration ended")
+            emotions[artist_name][song_name] = song_emotions
+            print("iteration ended")
 
     elapsed_time = time.process_time() - t
     print(f'Time elapsed since word count started: {elapsed_time}')
