@@ -7,7 +7,7 @@ services:
       context: .
     command: python3.7 producer_main.py
     environment:
-      UPLOAD_TOPIC: "test27"
+      UPLOAD_TOPIC: "finaltest"
       KAFKA_HOST: "kafka"
       BATCH_SIZE : 5
     networks:

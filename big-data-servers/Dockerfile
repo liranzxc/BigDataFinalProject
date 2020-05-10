@@ -1,8 +1,10 @@
 FROM ubuntu:latest
 
 WORKDIR /opt/app
-
-
+ENV TZ=Europe/Minsk
+ENV DOCKER True
+ENV PYSPARK_PYTHON python3.7
+ENV DEBIAN_FRONTEND=noninteractive
 RUN cat /etc/os-release
 
 RUN apt-get update && apt-get install
@@ -31,8 +33,7 @@ RUN python3.7 -m pip install -r ./requirements.txt
 
 RUN apt-get install zip -y
 
-ENV DOCKER True
-ENV PYSPARK_PYTHON python3.7
+
 COPY . /opt/app
 
 RUN zip -r all.zip .
