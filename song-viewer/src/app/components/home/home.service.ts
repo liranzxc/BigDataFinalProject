@@ -8,7 +8,7 @@ import {SongProfile} from "../../models/song-profile";
 export class HomeService {
 
   constructor(private http:HttpClient) { }
-  private URL_SERVER = "http://localhost:5000";
+  private URL_SERVER = "http://109.67.32.52:5000";
 
   async getCounterMongodb()
   {
